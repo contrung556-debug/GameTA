@@ -17,6 +17,7 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
   int questionIndex=0;
   String? selected;
   int correctCount=0;
+  bool finished=false;
   static const exercises=<({String word,String correct,List<String> choices})>[
     (word:'Apple',correct:'apple',choices:['apple','banana','grapes']),
     (word:'Banana',correct:'banana',choices:['carrot','banana','apple']),
@@ -33,16 +34,23 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
     await speech.speak(exercises[questionIndex].word);
   }
   void choose(String answer){
-    if(selected!=null)return;
+    if(selected!=null || finished)return;
+    final isCorrect=answer==exercises[questionIndex].correct;
     setState(() {
       selected=answer;
-      if(answer==exercises[questionIndex].correct)correctCount++;
+      if(isCorrect)correctCount++;
     });
+    speech.stop().then((_) => speech.speak(
+      isCorrect ? 'Great job!' : 'Good try!'));
   }
   void next(){
     if(questionIndex==exercises.length-1){
-      setState(() {questionIndex=0;selected=null;correctCount=0;});
+      setState(() => finished=true);
+      speech.stop().then((_) => speech.speak('Lesson complete! Well done!'));
     }else{setState(() {questionIndex++;selected=null;});}
+  }
+  void restart(){
+    setState(() {questionIndex=0;selected=null;correctCount=0;finished=false;});
   }
   @override
   Widget build(BuildContext context)=>Scaffold(
@@ -78,9 +86,33 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
       const Text('Nghe câu tiếng Anh và chọn đáp án đúng để nhận sao.',
         textAlign:TextAlign.center),
       const SizedBox(height:18),
-      Card(color:const Color(0xFFE9F6FF),
+      if(finished)
+        Card(color:const Color(0xFFFFF0B9),
+          child:Padding(padding:const EdgeInsets.all(20),
+            child:Column(children:[
+              const Icon(Icons.emoji_events_rounded,
+                size:72,color:Color(0xFFE4A21D)),
+              const Text('Hoàn thành bài học!',
+                style:TextStyle(fontSize:23,fontWeight:FontWeight.w900)),
+              const SizedBox(height:8),
+              Text('⭐ $correctCount / ${exercises.length} câu đúng',
+                style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold)),
+              const SizedBox(height:12),
+              Text(correctCount==exercises.length
+                ? 'Xuất sắc! Bé đã trả lời đúng tất cả!'
+                : 'Giỏi lắm! Hãy luyện tập thêm nhé!',
+                textAlign:TextAlign.center),
+              const SizedBox(height:14),
+              FilledButton.icon(onPressed:restart,
+                icon:const Icon(Icons.replay_rounded),
+                label:const Text('Chơi lại')),
+            ])))
+      else Card(color:const Color(0xFFE9F6FF),
         child:Padding(padding:const EdgeInsets.all(16),
           child:Column(children:[
+            LinearProgressIndicator(value:(questionIndex+1)/exercises.length,
+              minHeight:8,borderRadius:BorderRadius.circular(10)),
+            const SizedBox(height:8),
             Text('Bài ${questionIndex+1}/${exercises.length} · Đúng: $correctCount',
               style:const TextStyle(fontWeight:FontWeight.w800)),
             const SizedBox(height:10),
@@ -120,7 +152,7 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
               const SizedBox(height:8),
               FilledButton(onPressed:next,
                 child:Text(questionIndex==exercises.length-1
-                  ? 'Chơi lại' : 'Câu tiếp theo')),
+                  ? 'Xem kết quả' : 'Câu tiếp theo')),
             ],
           ]))),
       const SizedBox(height:22),
