@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'cat_city.dart';
+import 'be_vui_tom_home.dart';
 import 'be_vui_progress.dart';
 import 'be_vui_3d_cat.dart';
 import 'be_vui_game_hub.dart';
@@ -51,7 +52,7 @@ class BeVuiEnglish extends StatelessWidget {
       fontFamily: 'Roboto',
       appBarTheme: const AppBarTheme(backgroundColor: cream, foregroundColor: ink),
     ),
-    home: const BeVuiGameHub(),
+    home: const BeVuiTomHome(),
   );
 }
 
