@@ -1,0 +1,21 @@
+workflows:
+  ios-build:
+    name: Bé Vui English iOS
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Create Flutter platform files
+        script: |
+          cd be_vui_english
+          flutter create . --platforms=ios,android --project-name be_vui_english
+          flutter pub get
+          flutter analyze
+      - name: Build unsigned iOS app for validation
+        script: |
+          cd be_vui_english
+          flutter build ios --release --no-codesign
+    artifacts:
+      - be_vui_english/build/ios/iphoneos/*.app
