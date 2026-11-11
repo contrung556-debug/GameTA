@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'be_vui_animated_city.dart';
+import 'be_vui_cat_portrait.dart';
 import 'be_vui_market_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -116,16 +117,15 @@ class _CatCityScreenState extends State<CatCityScreen> {
                     _ => const Offset(.50, .50),
                   };
                   return Stack(children: [Positioned(
-                    left: constraints.maxWidth * (.48 + (target.dx - .48) * progress) - 17,
-                    top: constraints.maxHeight * (.82 + (target.dy - .82) * progress) - 17
+                    left: constraints.maxWidth * (.48 + (target.dx - .48) * progress) - 24,
+                    top: constraints.maxHeight * (.82 + (target.dy - .82) * progress) - 24
                         - (progress * 12 * (1 - progress)),
                     child: IgnorePointer(child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: .9),
                         shape: BoxShape.circle),
-                      child: const Icon(Icons.pets_rounded,
-                        size: 24, color: Color(0xFF7957E8))))),
+                      child: const BeVuiCatPortrait(size: 38)))),
                   ]);
                 },
               )),
