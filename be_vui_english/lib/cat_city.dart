@@ -47,7 +47,6 @@ class _CatCityScreenState extends State<CatCityScreen> {
     voice.setLanguage('en-US');
     voice.setSpeechRate(.42);
   }
-  @override
   void refreshProgress() { if(mounted)setState(() {}); }
   void reward() { progress.earnStars(1); }
   @override
