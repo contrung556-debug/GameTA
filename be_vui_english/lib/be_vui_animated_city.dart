@@ -53,7 +53,7 @@ class _BeVuiAnimatedCityState extends State<BeVuiAnimatedCity>
                   borderRadius:BorderRadius.circular(16)),
                 child:const Text('Hello! 👋',style:TextStyle(
                   fontSize:11,fontWeight:FontWeight.w800,
-                  color:Color(0xFF4D4A82))))),
+                  color:Color(0xFF4D4A82)))))),
         ]);
       }))),
   );
