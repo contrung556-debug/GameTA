@@ -88,6 +88,11 @@ class TopicScreen extends StatelessWidget {
                 ])),
               Text('🚀', style: TextStyle(fontSize: 60)),
             ])),
+          const SizedBox(height: 12),
+          AnimatedBuilder(animation: BeVuiProgress.instance,
+            builder: (context, _) => Text(
+              '⭐ Tổng sao: ${BeVuiProgress.instance.stars}   🏆 Bài hoàn thành: ${BeVuiProgress.instance.completedLessons}',
+              style: const TextStyle(fontWeight: FontWeight.w800,color: purple))),
           const SizedBox(height: 16),
           SizedBox(width: double.infinity, height: 64,
             child: FilledButton.icon(
@@ -181,6 +186,7 @@ class _LessonScreenState extends State<LessonScreen> {
     if (correct) return;
     if (selected == widget.topic.words[index]) {
       setState(() { correct = true; stars++; });
+      BeVuiProgress.instance.earnStars(1);
       speak('Great job!');
     } else {
       speak('Try again');
@@ -188,6 +194,7 @@ class _LessonScreenState extends State<LessonScreen> {
   }
   void next() {
     if (index + 1 == widget.topic.words.length) {
+      BeVuiProgress.instance.completeLesson();
       Navigator.pop(context);
       return;
     }
