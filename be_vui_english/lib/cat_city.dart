@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'be_vui_city_art.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -42,21 +43,17 @@ class _CatCityScreenState extends State<CatCityScreen> {
           fontWeight: FontWeight.bold)))),
     ]),
     body: ListView(padding: const EdgeInsets.all(16), children: [
-      Container(padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(colors: [Color(0xFFB7E8FF), Color(0xFFE8D9FF)]),
-          borderRadius: BorderRadius.circular(30)),
-        child: Column(children: [
-          const Text('🏙️  ☀️  🏡  🌳  🏬', style: TextStyle(fontSize: 36)),
-          const SizedBox(height: 8),
-          const Text('🐱', style: TextStyle(fontSize: 100)),
-          const Text('Xin chào! Mình là Mèo Bé Vui!',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: _ink, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 12),
-          FilledButton.icon(onPressed: () => say('Hello! Let us explore the city!'),
-            icon: const Icon(Icons.volume_up_rounded),
-            label: const Text('🔊 Nghe mèo nói')),
+      const BeVuiCityArt(),
+      const SizedBox(height: 10),
+      Container(padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(color: const Color(0xFFE8DFFF),
+          borderRadius: BorderRadius.circular(22)),
+        child: Row(children: [
+          const Expanded(child: Text('🐾 Cùng Mèo Bé Vui khám phá thành phố!',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900,
+              color: _ink))),
+          IconButton.filled(onPressed: () => say('Hello! Let us explore the city!'),
+            icon: const Icon(Icons.volume_up_rounded)),
         ])),
       const SizedBox(height: 20),
       const Text('Chăm sóc mèo 💗', style: TextStyle(fontSize: 22,
