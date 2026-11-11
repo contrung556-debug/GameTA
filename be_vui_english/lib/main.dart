@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'cat_city.dart';
 import 'be_vui_progress.dart';
+import 'be_vui_cat_portrait.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -55,95 +56,109 @@ class BeVuiEnglish extends StatelessWidget {
 
 class TopicScreen extends StatelessWidget {
   const TopicScreen({super.key});
-  static const tileColors = [pink, mint, lavender, peach];
+  static const tiles=[Color(0xFFFFE4EF),Color(0xFFDEF8EC),Color(0xFFE9E4FF),Color(0xFFFFEBCF),Color(0xFFDFF2FF)];
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(child: CustomScrollView(slivers: [
-      SliverToBoxAdapter(child: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 24, 22, 12),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Row(children: [
-            CircleAvatar(backgroundColor: lavender, radius: 23,
-              child: Text('🐻', style: TextStyle(fontSize: 26))),
-            SizedBox(width: 12),
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('BÉ VUI ENGLISH', style: TextStyle(color: purple, fontSize: 12,
-                  fontWeight: FontWeight.w900, letterSpacing: 1.2)),
-                Text('Xin chào, bé yêu! 👋', style: TextStyle(color: ink,
-                  fontSize: 22, fontWeight: FontWeight.w900)),
-              ])),
-          ]),
-          const SizedBox(height: 22),
-          Container(width: double.infinity, padding: const EdgeInsets.all(22),
-            decoration: BoxDecoration(color: purple, borderRadius: BorderRadius.circular(28)),
-            child: const Row(children: [
-              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Cùng học tiếng Anh!', style: TextStyle(color: Colors.white,
-                    fontSize: 23, fontWeight: FontWeight.w900)),
-                  SizedBox(height: 8),
-                  Text('10 chủ đề • 100 từ vựng\nNghe, nhìn và chơi thật vui',
-                    style: TextStyle(color: Color(0xFFF1EAFF), fontSize: 14, height: 1.5)),
-                ])),
-              Text('🚀', style: TextStyle(fontSize: 60)),
+  Widget build(BuildContext context)=>Scaffold(
+    backgroundColor:const Color(0xFFFFFBF4),
+    body:SafeArea(child:CustomScrollView(slivers:[
+      SliverToBoxAdapter(child:Padding(padding:const EdgeInsets.fromLTRB(20,18,20,8),
+        child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+          const Row(children:[
+            BeVuiCatPortrait(size:54),
+            SizedBox(width:12),
+            Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+              Text('BÉ VUI ENGLISH',style:TextStyle(color:purple,fontSize:12,fontWeight:FontWeight.w900,letterSpacing:1.2)),
+              Text('Chào mừng bé trở lại! ✨',style:TextStyle(color:ink,fontSize:18,fontWeight:FontWeight.w900)),
             ])),
-          const SizedBox(height: 12),
-          AnimatedBuilder(animation: BeVuiProgress.instance,
-            builder: (context, _) => Text(
-              '⭐ Tổng sao: ${BeVuiProgress.instance.stars}   🏆 Bài hoàn thành: ${BeVuiProgress.instance.completedLessons}',
-              style: const TextStyle(fontWeight: FontWeight.w800,color: purple))),
-          const SizedBox(height: 16),
-          SizedBox(width: double.infinity, height: 64,
-            child: FilledButton.icon(
-              onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const CatCityScreen())),
-              icon: const Text('🐱', style: TextStyle(fontSize: 28)),
-              label: const Text('Chơi cùng Mèo Bé Vui 🏙️',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900)),
-              style: FilledButton.styleFrom(backgroundColor: Color(0xFFFF9B42),
-                foregroundColor: Colors.white))),
-          const SizedBox(height: 25),
-          const Text('Khám phá chủ đề ✨', style: TextStyle(
-            color: ink, fontSize: 23, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 6),
-          const Text('Chọn một chủ đề để bắt đầu nhé!',
-            style: TextStyle(color: Color(0xFF737B92), fontSize: 14)),
-        ]),
-      )),
-      SliverPadding(
-        padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
-        sliver: SliverGrid.builder(
-          itemCount: topics.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 13, mainAxisSpacing: 13,
-            childAspectRatio: .92),
-          itemBuilder: (context, i) => Material(
-            color: tileColors[i % tileColors.length],
-            borderRadius: BorderRadius.circular(25),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(25),
-              onTap: () => Navigator.push(context, MaterialPageRoute(
-                builder: (_) => LessonScreen(topic: topics[i]))),
-              child: Padding(padding: const EdgeInsets.all(14),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Expanded(child: Center(child: Text(topics[i].emoji,
-                    style: const TextStyle(fontSize: 61)))),
-                  Text(topics[i].title, style: const TextStyle(color: ink,
-                    fontSize: 18, fontWeight: FontWeight.w900)),
-                  const SizedBox(height: 4),
-                  const Row(children: [
-                    Text('10 từ vựng', style: TextStyle(color: Color(0xFF5C6480), fontSize: 12)),
-                    Spacer(),
-                    Icon(Icons.arrow_forward_rounded, color: ink, size: 19),
+            Icon(Icons.auto_awesome_rounded,color:purple,size:26),
+          ]),
+          const SizedBox(height:22),
+          Container(width:double.infinity,
+            decoration:BoxDecoration(
+              gradient:const LinearGradient(colors:[Color(0xFF7352DE),Color(0xFFA777ED)]),
+              borderRadius:BorderRadius.circular(30),
+              boxShadow:const [BoxShadow(color:Color(0x337654D8),blurRadius:20,offset:Offset(0,9))]),
+            child:ClipRRect(borderRadius:BorderRadius.circular(30),
+              child:Stack(children:[
+                Positioned(top:-42,right:-35,child:Container(width:170,height:170,
+                  decoration:BoxDecoration(shape:BoxShape.circle,color:Colors.white.withValues(alpha:.10)))),
+                Padding(padding:const EdgeInsets.fromLTRB(20,24,12,24),
+                  child:Row(children:[
+                    const Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+                      Text('HÀNH TRÌNH TIẾNG ANH',style:TextStyle(color:Color(0xFFEFE6FF),fontSize:11,fontWeight:FontWeight.w900)),
+                      SizedBox(height:9),
+                      Text('Học vui mỗi ngày!',style:TextStyle(color:Colors.white,fontSize:25,fontWeight:FontWeight.w900,height:1.1)),
+                      SizedBox(height:10),
+                      Text('Khám phá thành phố cùng Mèo Bé Vui nhé!',style:TextStyle(color:Colors.white,fontSize:13,height:1.5)),
+                    ])),
+                    Container(width:118,height:138,
+                      decoration:BoxDecoration(color:Colors.white.withValues(alpha:.16),borderRadius:BorderRadius.circular(25)),
+                      child:const Center(child:BeVuiCatPortrait(size:112))),
+                  ])),
+              ]))),
+          const SizedBox(height:17),
+          AnimatedBuilder(animation:BeVuiProgress.instance,builder:(context,_)=>Row(children:[
+            Expanded(child:_stat('⭐','Ngôi sao',BeVuiProgress.instance.stars.toString(),const Color(0xFFFFF1D3))),
+            const SizedBox(width:12),
+            Expanded(child:_stat('🏆','Bài đã học',BeVuiProgress.instance.completedLessons.toString(),const Color(0xFFE7F7EF))),
+          ])),
+          const SizedBox(height:17),
+          Material(color:const Color(0xFFFFA64E),borderRadius:BorderRadius.circular(22),
+            child:InkWell(borderRadius:BorderRadius.circular(22),
+              onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>const CatCityScreen())),
+              child:const Padding(padding:EdgeInsets.symmetric(horizontal:17,vertical:18),
+                child:Row(children:[
+                  Icon(Icons.location_city_rounded,color:Colors.white,size:30),
+                  SizedBox(width:12),
+                  Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+                    Text('Vào thành phố Bé Vui',style:TextStyle(color:Colors.white,fontSize:17,fontWeight:FontWeight.w900)),
+                    SizedBox(height:3),
+                    Text('Khám phá • Học tập • Nhận sao',style:TextStyle(color:Colors.white,fontSize:12)),
+                  ])),
+                  Icon(Icons.arrow_forward_ios_rounded,color:Colors.white,size:18),
+                ])))),
+          const SizedBox(height:26),
+          const Text('Khám phá bài học 📚',style:TextStyle(color:ink,fontSize:23,fontWeight:FontWeight.w900)),
+          const SizedBox(height:5),
+          const Text('10 chủ đề thú vị đang chờ bé!',style:TextStyle(color:Color(0xFF737B92),fontSize:14)),
+        ]))),
+      SliverPadding(padding:const EdgeInsets.fromLTRB(18,14,18,32),
+        sliver:SliverGrid.builder(itemCount:topics.length,
+          gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:2,crossAxisSpacing:13,mainAxisSpacing:13,childAspectRatio:.92),
+          itemBuilder:(context,i)=>Material(color:tiles[i%tiles.length],borderRadius:BorderRadius.circular(24),
+            child:InkWell(borderRadius:BorderRadius.circular(24),
+              onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>LessonScreen(topic:topics[i]))),
+              child:Padding(padding:const EdgeInsets.all(13),
+                child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+                  Row(children:[
+                    Container(padding:const EdgeInsets.symmetric(horizontal:9,vertical:5),
+                      decoration:BoxDecoration(color:Colors.white.withValues(alpha:.8),borderRadius:BorderRadius.circular(12)),
+                      child:Text((i+1).toString().padLeft(2,'0'),style:const TextStyle(color:purple,fontSize:11,fontWeight:FontWeight.w900))),
+                    const Spacer(),
+                    const Icon(Icons.north_east_rounded,color:purple,size:19),
                   ]),
-                ])),
-            ),
-          ),
-        ),
+                  Expanded(child:Center(child:Text(topics[i].emoji,style:const TextStyle(fontSize:56)))),
+                  Text(topics[i].title,maxLines:1,overflow:TextOverflow.ellipsis,
+                    style:const TextStyle(color:ink,fontSize:17,fontWeight:FontWeight.w900)),
+                  const SizedBox(height:5),
+                  const Text('10 từ • Nghe & chọn',maxLines:1,overflow:TextOverflow.ellipsis,
+                    style:TextStyle(color:Color(0xFF656D83),fontSize:11,fontWeight:FontWeight.w600)),
+                ])))))),
       ),
     ])),
   );
+  Widget _stat(String emoji,String label,String value,Color color)=>Container(
+    padding:const EdgeInsets.symmetric(horizontal:13,vertical:14),
+    decoration:BoxDecoration(color:color,borderRadius:BorderRadius.circular(21)),
+    child:Row(children:[
+      Text(emoji,style:const TextStyle(fontSize:26)),
+      const SizedBox(width:9),
+      Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+        Text(value,style:const TextStyle(color:ink,fontSize:21,fontWeight:FontWeight.w900)),
+        Text(label,style:const TextStyle(color:Color(0xFF667087),fontSize:11,fontWeight:FontWeight.w700)),
+      ])),
+    ]));
 }
 
 class LessonScreen extends StatefulWidget {
