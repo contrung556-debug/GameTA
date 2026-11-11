@@ -97,7 +97,7 @@ class _LessonScreenState extends State<LessonScreen> {
           OutlinedButton.icon(onPressed:()=>speak('Find the ${word(entry)}'),icon:const Icon(Icons.volume_up),label:const Text('Nghe lại')),
           ...choices.map((s)=>Padding(padding:const EdgeInsets.all(5),child:SizedBox(
             width:double.infinity,height:70,
-            child:FilledButton.tonal(onPressed:correct?null:()=>choose(s),child:Text(picture(s),style:const TextStyle(fontSize:40))))),
+            child:FilledButton.tonal(onPressed:correct?null:()=>choose(s),child:Text(picture(s),style:const TextStyle(fontSize:40)))))),
           if(correct)const Text('🌟 Giỏi lắm!')
         ],
         const Spacer(),
