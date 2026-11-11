@@ -121,9 +121,9 @@ func _setup_world() -> void:
  camera.projection = Camera3D.PROJECTION_ORTHOGONAL
  camera.size = 23.5
  camera.position = Vector3(16,22,24)
+ add_child(camera)
  camera.look_at(Vector3(0,0,0),Vector3.UP)
  camera.current = true
- add_child(camera)
  _mesh_box(self,"Grass",Vector3(0,-0.25,0),Vector3(35,0.4,24),Color("#8bda8a"))
  _mesh_box(self,"Road horizontal",Vector3(0,0.01,1.0),Vector3(33,0.05,2.6),Color("#778aa5"))
  _mesh_box(self,"Road vertical",Vector3(0,0.02,0),Vector3(2.8,0.05,21),Color("#778aa5"))
