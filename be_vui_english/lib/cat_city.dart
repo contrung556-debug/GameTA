@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'be_vui_city_art.dart';
+import 'be_vui_market_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -28,6 +29,10 @@ class _CatCityScreenState extends State<CatCityScreen> {
     await voice.stop();
     await voice.speak(text);
   }
+  void openMarket() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
+      BeVuiMarketGame(onEarnStar: () => setState(() => stars++))));
+  }
   void openMission(String title, List<CatQuestion> questions) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
       CatMissionScreen(title: title, questions: questions,
@@ -55,7 +60,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
                 shape: const CircleBorder(),
                 elevation: 4,
                 child: InkWell(customBorder: const CircleBorder(),
-                  onTap: () => openMission(title, questions),
+                  onTap: () => title == 'Chợ' || title == 'Siêu thị' ? openMarket() : openMission(title, questions),
                   child: const Padding(padding: EdgeInsets.all(10),
                     child: Icon(Icons.touch_app_rounded,
                       size: 19, color: Color(0xFF6B48C8)))))),
@@ -118,7 +123,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
         padding: const EdgeInsets.only(bottom: 10),
         child: Material(color: item.$5, borderRadius: BorderRadius.circular(22),
           child: InkWell(borderRadius: BorderRadius.circular(22),
-            onTap: () => openMission(item.$2, item.$4),
+            onTap: () => item.$2 == 'Chợ & siêu thị' ? openMarket() : openMission(item.$2, item.$4),
             child: Padding(padding: const EdgeInsets.all(16),
               child: Row(children: [
                 Text(item.$1, style: const TextStyle(fontSize: 43)),
