@@ -60,7 +60,7 @@ class _IsometricCityPainter extends CustomPainter {
     rounded(c,Rect.fromLTWH(x-4,y+h-1,w+8,7),
       const Color(0xFFFDF4DF),4);
     rounded(c,Rect.fromLTWH(x+8,y-7,w-4,18),Colors.white,8);
-    label(c,symbol+' '+name,Offset(x+12,y-5),9);
+    label(c,symbol+' '+name,Offset(x+12,y-5),fontSize:9);
   }
   void tree(Canvas c,double x,double y,double scale){
     c.save();c.translate(x,y);c.scale(scale);
