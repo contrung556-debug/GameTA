@@ -82,6 +82,7 @@ func _ready() -> void:
  _decorate_park()
  _street_furniture()
  _cat_details()
+ _landscape_details()
 
 func _decorate_school() -> void:
  var root:=Node3D.new()
@@ -246,3 +247,48 @@ func _cat_details() -> void:
  box(cat,"Hat gold trim",Vector3(0,2.47,0.15),Vector3(1.28,0.05,1.18),Color("#ffd36c"))
  ball(cat,"Hat tassel",Vector3(0.68,2.21,0.4),0.13,Color("#ffe064"))
  box(cat,"Shirt emblem",Vector3(0,0.93,0.46),Vector3(0.20,0.25,0.04),Color("#ffe076"))
+
+func _landscape_details() -> void:
+ # Soft, layered park edges and tiled walkways make the town feel handcrafted.
+ for i in range(15):
+  var x: float=-14.0+float(i)*2.0
+  for z in [-7.6,7.6]:
+   if absf(x)<2.0 and z>0.0: continue
+   ball(self,"Round shrub",Vector3(x,0.38,z),0.48,
+    Color("#53bf83") if i%3==0 else Color("#86da94"),Vector3(1.3,0.7,1.0))
+   if i%3==0:
+    ball(self,"Shrub bloom",Vector3(x-0.15,0.7,z),0.18,Color("#ffc5e5"))
+ for i in range(12):
+  var x: float=-13.0+float(i)*2.3
+  if absf(x)<3.0: continue
+  for z in [-1.65,3.65]:
+   box(self,"Paving stone",Vector3(x,0.13,z),Vector3(1.6,0.06,0.50),Color("#ffe9d6"))
+ for i in range(8):
+  var x: float=-13.0+float(i)*3.5
+  if absf(x)<2.0: continue
+  _balloon_group(Vector3(x,0,9.5),i)
+ for i in range(5):
+  var x: float=-12.0+float(i)*6.0
+  _decorative_cloud(Vector3(x,9.0,-12.0),0.9+float(i%3)*0.25)
+
+func _balloon_group(p: Vector3,variant: int) -> void:
+ var root:=Node3D.new()
+ root.position=p
+ add_child(root)
+ for i in range(3):
+  var x: float=float(i-1)*0.34
+  var y: float=1.6+float((i+variant)%3)*0.30
+  cylinder(root,"Balloon string",Vector3(x*0.5,y*0.5,0),0.015,y,
+   Color("#fff4e5"))
+  ball(root,"Party balloon",Vector3(x,y,0),0.29,
+   [Color("#ff82ad"),Color("#ffdb63"),Color("#8dd9ff")][i],
+   Vector3(0.86,1.20,0.86))
+
+func _decorative_cloud(p: Vector3,size: float) -> void:
+ var root:=Node3D.new()
+ root.position=p
+ root.scale=Vector3.ONE*size
+ add_child(root)
+ for i in range(4):
+  ball(root,"Cloud puff",Vector3(float(i)*0.75,0.15+float(i%2)*0.22,0),
+   0.75,Color("#ffffff"),Vector3(1.1,0.7,0.85))
