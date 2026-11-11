@@ -1,0 +1,12 @@
+name: be_vui_english
+description: English learning for ages 2 to 6
+publish_to: none
+version: 0.1.0+1
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_tts: ^4.2.3
+flutter:
+  uses-material-design: true
