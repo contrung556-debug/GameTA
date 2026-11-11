@@ -1,9 +1,14 @@
 import 'dart:math';
 import 'cat_city.dart';
+import 'be_vui_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-void main() => runApp(const BeVuiEnglish());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await BeVuiProgress.instance.load();
+  runApp(const BeVuiEnglish());
+}
 
 class Topic {
   final String title, emoji;
