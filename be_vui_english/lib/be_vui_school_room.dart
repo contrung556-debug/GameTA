@@ -1,11 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'be_vui_cat_portrait.dart';
 
 /// A dedicated illustrated classroom before the existing English quiz.
-class BeVuiSchoolRoom extends StatelessWidget {
+class BeVuiSchoolRoom extends StatefulWidget {
   final VoidCallback onStartLesson;
   const BeVuiSchoolRoom({super.key,required this.onStartLesson});
 
+  @override
+  State<BeVuiSchoolRoom> createState()=>_BeVuiSchoolRoomState();
+}
+
+class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
+  final FlutterTts speech=FlutterTts();
+  int questionIndex=0;
+  String? selected;
+  int correctCount=0;
+  static const exercises=<({String word,String correct,List<String> choices})>[
+    (word:'Apple',correct:'🍎',choices:['🍎','🍌','🍇']),
+    (word:'Cat',correct:'🐱',choices:['🐶','🐱','🐰']),
+    (word:'Book',correct:'📘',choices:['✏️','📘','🎒']),
+    (word:'Car',correct:'🚗',choices:['🚌','🚲','🚗']),
+    (word:'Sun',correct:'☀️',choices:['🌧️','☀️','🌙']),
+  ];
+  @override
+  void initState(){super.initState();speech.setLanguage('en-US');speech.setSpeechRate(.4);}
+  @override
+  void dispose(){speech.stop();super.dispose();}
+  Future<void> pronounce() async {
+    await speech.stop();
+    await speech.speak(exercises[questionIndex].word);
+  }
+  void choose(String answer){
+    if(selected!=null)return;
+    setState(() {
+      selected=answer;
+      if(answer==exercises[questionIndex].correct)correctCount++;
+    });
+  }
+  void next(){
+    if(questionIndex==exercises.length-1){
+      setState(() {questionIndex=0;selected=null;correctCount=0;});
+    }else{setState(() {questionIndex++;selected=null;});}
+  }
   @override
   Widget build(BuildContext context)=>Scaffold(
     backgroundColor:const Color(0xFFFFF8E8),
@@ -39,9 +76,50 @@ class BeVuiSchoolRoom extends StatelessWidget {
       const SizedBox(height:9),
       const Text('Nghe câu tiếng Anh và chọn đáp án đúng để nhận sao.',
         textAlign:TextAlign.center),
+      const SizedBox(height:18),
+      Card(color:const Color(0xFFE9F6FF),
+        child:Padding(padding:const EdgeInsets.all(16),
+          child:Column(children:[
+            Text('Bài ${questionIndex+1}/${exercises.length} · Đúng: $correctCount',
+              style:const TextStyle(fontWeight:FontWeight.w800)),
+            const SizedBox(height:10),
+            const Text('Nghe và chọn hình đúng',
+              style:TextStyle(fontSize:18,fontWeight:FontWeight.w900)),
+            const SizedBox(height:8),
+            FilledButton.tonalIcon(
+              onPressed:pronounce,
+              icon:const Icon(Icons.volume_up_rounded),
+              label:Text('Nghe: ${exercises[questionIndex].word}')),
+            const SizedBox(height:12),
+            Row(children:[
+              for(final choice in exercises[questionIndex].choices)
+                Expanded(child:Padding(
+                  padding:const EdgeInsets.symmetric(horizontal:3),
+                  child:OutlinedButton(
+                    onPressed:()=>choose(choice),
+                    style:OutlinedButton.styleFrom(
+                      backgroundColor:selected==choice
+                        ? (choice==exercises[questionIndex].correct
+                          ? const Color(0xFFB9F2C7)
+                          : const Color(0xFFFFD2D2))
+                        : Colors.white,
+                      padding:const EdgeInsets.symmetric(vertical:15)),
+                    child:Text(choice,style:const TextStyle(fontSize:34))))),
+            ]),
+            if(selected!=null)...[
+              const SizedBox(height:8),
+              Text(selected==exercises[questionIndex].correct
+                ? 'Giỏi lắm! ⭐' : 'Thử lại ở câu tiếp theo nhé!',
+                style:const TextStyle(fontWeight:FontWeight.w800)),
+              const SizedBox(height:8),
+              FilledButton(onPressed:next,
+                child:Text(questionIndex==exercises.length-1
+                  ? 'Chơi lại' : 'Câu tiếp theo')),
+            ],
+          ]))),
       const SizedBox(height:22),
       FilledButton.icon(
-        onPressed:onStartLesson,
+        onPressed:widget.onStartLesson,
         icon:const Icon(Icons.play_arrow_rounded),
         label:const Padding(padding:EdgeInsets.all(12),
           child:Text('Bắt đầu bài học',
