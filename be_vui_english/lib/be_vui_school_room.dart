@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'be_vui_cat_portrait.dart';
+import 'be_vui_food_art.dart';
 
 /// A dedicated illustrated classroom before the existing English quiz.
 class BeVuiSchoolRoom extends StatefulWidget {
@@ -17,11 +18,11 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
   String? selected;
   int correctCount=0;
   static const exercises=<({String word,String correct,List<String> choices})>[
-    (word:'Apple',correct:'🍎',choices:['🍎','🍌','🍇']),
-    (word:'Cat',correct:'🐱',choices:['🐶','🐱','🐰']),
-    (word:'Book',correct:'📘',choices:['✏️','📘','🎒']),
-    (word:'Car',correct:'🚗',choices:['🚌','🚲','🚗']),
-    (word:'Sun',correct:'☀️',choices:['🌧️','☀️','🌙']),
+    (word:'Apple',correct:'apple',choices:['apple','banana','grapes']),
+    (word:'Banana',correct:'banana',choices:['carrot','banana','apple']),
+    (word:'Milk',correct:'milk',choices:['bread','milk','fish']),
+    (word:'Fish',correct:'fish',choices:['pizza','grapes','fish']),
+    (word:'Bread',correct:'bread',choices:['bread','carrot','milk']),
   ];
   @override
   void initState(){super.initState();speech.setLanguage('en-US');speech.setSpeechRate(.4);}
@@ -104,7 +105,12 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
                           : const Color(0xFFFFD2D2))
                         : Colors.white,
                       padding:const EdgeInsets.symmetric(vertical:15)),
-                    child:Text(choice,style:const TextStyle(fontSize:34))))),
+                    child:Column(mainAxisSize:MainAxisSize.min,children:[
+                      BeVuiFoodArt(food:choice,size:65),
+                      const SizedBox(height:4),
+                      Text(choice,style:const TextStyle(fontSize:11,
+                        fontWeight:FontWeight.w700)),
+                    ])))),
             ]),
             if(selected!=null)...[
               const SizedBox(height:8),
