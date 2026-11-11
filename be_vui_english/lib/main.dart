@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'cat_city.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -82,6 +83,16 @@ class TopicScreen extends StatelessWidget {
                 ])),
               Text('🚀', style: TextStyle(fontSize: 60)),
             ])),
+          const SizedBox(height: 16),
+          SizedBox(width: double.infinity, height: 64,
+            child: FilledButton.icon(
+              onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const CatCityScreen())),
+              icon: const Text('🐱', style: TextStyle(fontSize: 28)),
+              label: const Text('Chơi cùng Mèo Bé Vui 🏙️',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900)),
+              style: FilledButton.styleFrom(backgroundColor: Color(0xFFFF9B42),
+                foregroundColor: Colors.white))),
           const SizedBox(height: 25),
           const Text('Khám phá chủ đề ✨', style: TextStyle(
             color: ink, fontSize: 23, fontWeight: FontWeight.w900)),
