@@ -2,6 +2,7 @@ import 'dart:math';
 import 'cat_city.dart';
 import 'be_vui_progress.dart';
 import 'be_vui_3d_cat.dart';
+import 'be_vui_game_hub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -50,7 +51,7 @@ class BeVuiEnglish extends StatelessWidget {
       fontFamily: 'Roboto',
       appBarTheme: const AppBarTheme(backgroundColor: cream, foregroundColor: ink),
     ),
-    home: const TopicScreen(),
+    home: const BeVuiGameHub(),
   );
 }
 
