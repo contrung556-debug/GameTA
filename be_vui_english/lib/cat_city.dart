@@ -89,7 +89,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
           );
           return Stack(children: [
             if (travelingTo != null)
-              TweenAnimationBuilder<double>(
+              Positioned.fill(child: TweenAnimationBuilder<double>(
                 key: ValueKey(tripNumber),
                 tween: Tween(begin: 0, end: 1),
                 duration: const Duration(milliseconds: 1200),
@@ -115,7 +115,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
                     'Nhà hàng' => const Offset(.81, .69),
                     _ => const Offset(.50, .50),
                   };
-                  return Positioned(
+                  return Stack(children: [Positioned(
                     left: constraints.maxWidth * (.48 + (target.dx - .48) * progress) - 17,
                     top: constraints.maxHeight * (.82 + (target.dy - .82) * progress) - 17
                         - (progress * 12 * (1 - progress)),
@@ -126,9 +126,9 @@ class _CatCityScreenState extends State<CatCityScreen> {
                         shape: BoxShape.circle),
                       child: const Icon(Icons.pets_rounded,
                         size: 24, color: Color(0xFF7957E8)))),
-                  );
+                  ]);
                 },
-              ),
+              )),
             hotspot(.23, .39, 'Trường học', challengeQuestions),
             hotspot(.50, .39, 'Bệnh viện', bathQuestions),
             hotspot(.80, .38, 'Siêu thị', foodQuestions),
