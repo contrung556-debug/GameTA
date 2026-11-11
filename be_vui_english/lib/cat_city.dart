@@ -16,7 +16,6 @@ class _CatCityScreenState extends State<CatCityScreen> {
   final FlutterTts voice = FlutterTts();
   int stars = 0;
   int hearts = 3;
-  String mood = 'happy';
   @override
   void initState() {
     super.initState();
@@ -43,7 +42,38 @@ class _CatCityScreenState extends State<CatCityScreen> {
           fontWeight: FontWeight.bold)))),
     ]),
     body: ListView(padding: const EdgeInsets.all(16), children: [
-      const BeVuiCityArt(),
+      Stack(children: [
+        const BeVuiCityArt(),
+        Positioned.fill(child: LayoutBuilder(builder: (context, constraints) {
+          Widget hotspot(double x, double y, String title,
+              List<CatQuestion> questions) => Positioned(
+            left: constraints.maxWidth * x - 20,
+            top: constraints.maxHeight * y - 20,
+            child: Semantics(label: 'Mở nhiệm vụ $title',
+              button: true,
+              child: Material(color: Colors.white.withValues(alpha: .92),
+                shape: const CircleBorder(),
+                elevation: 4,
+                child: InkWell(customBorder: const CircleBorder(),
+                  onTap: () => openMission(title, questions),
+                  child: const Padding(padding: EdgeInsets.all(10),
+                    child: Icon(Icons.touch_app_rounded,
+                      size: 19, color: Color(0xFF6B48C8)))))),
+          );
+          return Stack(children: [
+            hotspot(.23, .39, 'Trường học', challengeQuestions),
+            hotspot(.50, .39, 'Bệnh viện', bathQuestions),
+            hotspot(.80, .38, 'Siêu thị', foodQuestions),
+            hotspot(.18, .68, 'Chợ', foodQuestions),
+            hotspot(.81, .69, 'Nhà hàng', restaurantQuestions),
+          ]);
+        })),
+      ]),
+      const SizedBox(height: 8),
+      const Text('👆 Chạm vào các điểm sáng trên bản đồ để vào địa điểm',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700,
+          color: Color(0xFF58617E))),
       const SizedBox(height: 10),
       Container(padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(color: const Color(0xFFE8DFFF),
