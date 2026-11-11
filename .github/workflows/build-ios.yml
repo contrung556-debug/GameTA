@@ -1,0 +1,51 @@
+name: Build Be Vui English iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'be_vui_english/**'
+      - '.github/workflows/build-ios.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate iOS and Android platform projects
+        working-directory: be_vui_english
+        run: |
+          flutter create . --platforms=ios,android --project-name be_vui_english
+          flutter pub get
+
+      - name: Analyze Dart source
+        working-directory: be_vui_english
+        run: flutter analyze
+
+      - name: Build iOS without signing
+        working-directory: be_vui_english
+        run: flutter build ios --release --no-codesign
+
+      - name: Package unsigned iOS app for inspection
+        run: |
+          cd be_vui_english/build/ios/iphoneos
+          ditto -c -k --sequesterRsrc --keepParent Runner.app Runner-unsigned.zip
+
+      - name: Upload unsigned build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: be-vui-english-ios-unsigned
+          path: be_vui_english/build/ios/iphoneos/Runner-unsigned.zip
+          if-no-files-found: error
