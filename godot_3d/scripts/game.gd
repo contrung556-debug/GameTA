@@ -154,6 +154,10 @@ func _setup_world() -> void:
  cat.position = Vector3(-5,0,5)
  add_child(cat)
  _build_cat(cat)
+ var details := Node3D.new()
+ details.name = "TownDetails"
+ details.set_script(load("res://scripts/town_details.gd"))
+ add_child(details)
 
 func _near_building(p: Vector3) -> bool:
  for v in locations.values():
