@@ -4,7 +4,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 const _purple = Color(0xFF7957E8);
 const _ink = Color(0xFF263454);
-const _cream = Color(0xFFFFF9EF);
 
 class CatCityScreen extends StatefulWidget {
   const CatCityScreen({super.key});
