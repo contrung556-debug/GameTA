@@ -17,6 +17,23 @@ class _CatCityScreenState extends State<CatCityScreen> {
   final FlutterTts voice = FlutterTts();
   int stars = 0;
   int hearts = 3;
+  String? travelingTo;
+  int tripNumber = 0;
+  void travelTo(String title, List<CatQuestion> questions) {
+    if (travelingTo != null) return;
+    setState(() { travelingTo = title; tripNumber++; });
+  }
+  void arriveAt(String title, List<CatQuestion> questions) {
+    if (!mounted || travelingTo != title) return;
+    setState(() => travelingTo = null);
+    if (title == 'Chợ' || title == 'Siêu thị') {
+      openMarket();
+    } else if (title == 'Nhà hàng') {
+      openRestaurant();
+    } else {
+      openMission(title, questions);
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -65,20 +82,53 @@ class _CatCityScreenState extends State<CatCityScreen> {
                 shape: const CircleBorder(),
                 elevation: 4,
                 child: InkWell(customBorder: const CircleBorder(),
-                  onTap: () {
-                    if (title == 'Chợ' || title == 'Siêu thị') {
-                      openMarket();
-                    } else if (title == 'Nhà hàng') {
-                      openRestaurant();
-                    } else {
-                      openMission(title, questions);
-                    }
-                  },
+                  onTap: () => travelTo(title, questions),
                   child: const Padding(padding: EdgeInsets.all(10),
                     child: Icon(Icons.touch_app_rounded,
                       size: 19, color: Color(0xFF6B48C8)))))),
           );
           return Stack(children: [
+            if (travelingTo != null)
+              TweenAnimationBuilder<double>(
+                key: ValueKey(tripNumber),
+                tween: Tween(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 1200),
+                curve: Curves.easeInOut,
+                onEnd: () {
+                  final destination = travelingTo;
+                  if (destination == null) return;
+                  final questions = switch (destination) {
+                    'Trường học' => challengeQuestions,
+                    'Bệnh viện' => bathQuestions,
+                    'Siêu thị' || 'Chợ' => foodQuestions,
+                    'Nhà hàng' => restaurantQuestions,
+                    _ => challengeQuestions,
+                  };
+                  arriveAt(destination, questions);
+                },
+                builder: (context, progress, child) {
+                  final target = switch (travelingTo) {
+                    'Trường học' => const Offset(.23, .39),
+                    'Bệnh viện' => const Offset(.50, .39),
+                    'Siêu thị' => const Offset(.80, .38),
+                    'Chợ' => const Offset(.18, .68),
+                    'Nhà hàng' => const Offset(.81, .69),
+                    _ => const Offset(.50, .50),
+                  };
+                  return Positioned(
+                    left: constraints.maxWidth * (.48 + (target.dx - .48) * progress) - 17,
+                    top: constraints.maxHeight * (.82 + (target.dy - .82) * progress) - 17
+                        - (progress * 12 * (1 - progress)),
+                    child: IgnorePointer(child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: .9),
+                        shape: BoxShape.circle),
+                      child: const Icon(Icons.pets_rounded,
+                        size: 24, color: Color(0xFF7957E8)))),
+                  );
+                },
+              ),
             hotspot(.23, .39, 'Trường học', challengeQuestions),
             hotspot(.50, .39, 'Bệnh viện', bathQuestions),
             hotspot(.80, .38, 'Siêu thị', foodQuestions),
