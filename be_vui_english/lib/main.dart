@@ -144,7 +144,7 @@ class TopicScreen extends StatelessWidget {
                   const SizedBox(height:5),
                   const Text('10 từ • Nghe & chọn',maxLines:1,overflow:TextOverflow.ellipsis,
                     style:TextStyle(color:Color(0xFF656D83),fontSize:11,fontWeight:FontWeight.w600)),
-                ])))))),
+                ]))))),
       ),
     ])),
   );
