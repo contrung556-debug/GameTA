@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'be_vui_food_art.dart';
+import 'be_vui_cat_portrait.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -111,10 +112,8 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
                 borderRadius:BorderRadius.vertical(bottom:Radius.circular(28))))),
             const Positioned(top:8,left:12,child:Text('☀️',
               style:TextStyle(fontSize:37))),
-            Positioned(top:35,right:10,child:Text(widget.restaurant ? '🍽️' : '🏪',
-              style:const TextStyle(fontSize:112))),
-            const Positioned(bottom:8,left:15,child:Text('🐱',
-              style:TextStyle(fontSize:100))),
+            Positioned(top:35,right:10,child:_SceneShop(restaurant:widget.restaurant)),
+            const Positioned(bottom:0,left:8,child:BeVuiCatPortrait(size:122)),
             Positioned(top:15,left:90,right:75,child:Container(
               padding:const EdgeInsets.all(10),
               decoration:BoxDecoration(color:Colors.white,
@@ -181,4 +180,49 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
             style:const TextStyle(fontSize:18,fontWeight:FontWeight.w900)))),
       ]))),
   );
+}
+
+class _SceneShop extends StatelessWidget {
+  final bool restaurant;
+  const _SceneShop({required this.restaurant});
+  @override
+  Widget build(BuildContext context)=>SizedBox(
+    width:135,height:132,
+    child:CustomPaint(painter:_SceneShopPainter(restaurant)),
+  );
+}
+class _SceneShopPainter extends CustomPainter {
+  final bool restaurant;
+  _SceneShopPainter(this.restaurant);
+  final p=Paint()..isAntiAlias=true;
+  void box(Canvas c,Rect rect,Color color,double radius){
+    p.color=color;c.drawRRect(RRect.fromRectAndRadius(
+      rect,Radius.circular(radius)),p);
+  }
+  @override
+  void paint(Canvas c,Size size){
+    c.save();c.scale(size.width/135,size.height/132);
+    box(c,const Rect.fromLTWH(10,44,113,82),
+      restaurant?const Color(0xFFFFD5A0):const Color(0xFFFFE5B4),9);
+    final roof=Path()..moveTo(3,47)..lineTo(67,5)
+      ..lineTo(131,47)..close();
+    p.color=restaurant?const Color(0xFFEE7C72):const Color(0xFFDE79B1);
+    c.drawPath(roof,p);
+    box(c,const Rect.fromLTWH(16,47,101,24),Colors.white,5);
+    for(var i=0;i<5;i++){
+      box(c,Rect.fromLTWH(17+i*20,47,12,24),
+        restaurant?const Color(0xFFED8A73):const Color(0xFFDB7AB5),3);
+    }
+    box(c,const Rect.fromLTWH(26,78,36,35),
+      const Color(0xFF8DDAF6),5);
+    box(c,const Rect.fromLTWH(77,76,32,50),
+      const Color(0xFFAD7C73),5);
+    box(c,const Rect.fromLTWH(85,84,14,19),
+      const Color(0xFFB7ECFF),3);
+    box(c,const Rect.fromLTWH(34,85,20,5),Colors.white70,2);
+    c.restore();
+  }
+  @override
+  bool shouldRepaint(covariant _SceneShopPainter oldDelegate)=>
+    oldDelegate.restaurant!=restaurant;
 }
