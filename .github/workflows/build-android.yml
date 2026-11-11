@@ -33,6 +33,9 @@ jobs:
           flutter create . --platforms=android,ios --project-name be_vui_english
           flutter pub get
           rm -f test/widget_test.dart analysis_options.yaml
+      - name: Test saved rewards and progress
+        working-directory: be_vui_english
+        run: flutter test
       - name: Analyze Flutter source
         working-directory: be_vui_english
         run: flutter analyze
