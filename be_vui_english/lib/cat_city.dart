@@ -90,9 +90,9 @@ class _CatCityScreenState extends State<CatCityScreen> {
         ('🏫', 'Trường học', 'School', challengeQuestions, const Color(0xFFFFF0C6)),
       ].map((item) => Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Material(color: item.$4, borderRadius: BorderRadius.circular(22),
+        child: Material(color: item.$5, borderRadius: BorderRadius.circular(22),
           child: InkWell(borderRadius: BorderRadius.circular(22),
-            onTap: () => openMission(item.$2, item.$3),
+            onTap: () => openMission(item.$2, item.$4),
             child: Padding(padding: const EdgeInsets.all(16),
               child: Row(children: [
                 Text(item.$1, style: const TextStyle(fontSize: 43)),
