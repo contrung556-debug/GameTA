@@ -6,7 +6,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 /// Interactive market scene: original Flutter-drawn UI, no borrowed game assets.
 class BeVuiMarketGame extends StatefulWidget {
   final VoidCallback onEarnStar;
-  const BeVuiMarketGame({super.key, required this.onEarnStar});
+  final bool restaurant;
+  const BeVuiMarketGame({super.key, required this.onEarnStar, this.restaurant = false});
   @override
   State<BeVuiMarketGame> createState() => _BeVuiMarketGameState();
 }
@@ -45,13 +46,16 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
   @override
   void dispose() { voice.stop(); super.dispose(); }
   void _nextRound() {
-    choices = [..._items]..shuffle(random);
+    choices = [...(widget.restaurant ? _items.where((item) =>
+      const ['pizza','fish','bread','milk','apple','banana'].contains(item.name)) : _items)]..shuffle(random);
     choices = choices.take(4).toList();
     target = choices[random.nextInt(choices.length)];
   }
   Future<void> _speak() async {
     await voice.stop();
-    await voice.speak('Please find the ${target.name}.');
+    await voice.speak(widget.restaurant
+      ? 'I would like the ${target.name}, please.'
+      : 'Please find the ${target.name}.');
   }
   void _pick(_MarketItem item) {
     if (answered) return;
@@ -67,7 +71,8 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
   void _continue() {
     if (round == 4) {
       showDialog<void>(context:context,builder:(context)=>AlertDialog(
-        title:const Text('🎉 Hoàn thành chuyến đi chợ!'),
+        title:Text(widget.restaurant
+          ? '🎉 Mèo đã dùng bữa!' : '🎉 Hoàn thành chuyến đi chợ!'),
         content:Text('Bé đã nhận $score ngôi sao. Giỏi lắm!'),
         actions:[FilledButton(onPressed:(){
           Navigator.pop(context); Navigator.pop(context);
@@ -81,7 +86,7 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor:const Color(0xFFFFF8EF),
-    appBar:AppBar(title:const Text('🛒 Chợ Bé Vui',style:TextStyle(
+    appBar:AppBar(title:Text(widget.restaurant ? '🍽️ Nhà hàng Bé Vui' : '🛒 Chợ Bé Vui',style:const TextStyle(
       fontWeight:FontWeight.w900)),backgroundColor:const Color(0xFFFFF8EF)),
     body:SafeArea(child:LayoutBuilder(builder:(context,limits)=>
       ListView(padding:const EdgeInsets.all(16),children:[
@@ -106,15 +111,15 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
                 borderRadius:BorderRadius.vertical(bottom:Radius.circular(28))))),
             const Positioned(top:8,left:12,child:Text('☀️',
               style:TextStyle(fontSize:37))),
-            const Positioned(top:35,right:10,child:Text('🏪',
-              style:TextStyle(fontSize:112))),
+            Positioned(top:35,right:10,child:Text(widget.restaurant ? '🍽️' : '🏪',
+              style:const TextStyle(fontSize:112))),
             const Positioned(bottom:8,left:15,child:Text('🐱',
               style:TextStyle(fontSize:100))),
             Positioned(top:15,left:90,right:75,child:Container(
               padding:const EdgeInsets.all(10),
               decoration:BoxDecoration(color:Colors.white,
                 borderRadius:BorderRadius.circular(20)),
-              child:const Text('Let’s go shopping!',
+              child:Text(widget.restaurant ? 'Let’s order food!' : 'Let’s go shopping!',
                 textAlign:TextAlign.center,
                 style:TextStyle(fontSize:15,fontWeight:FontWeight.w900,
                   color:Color(0xFF3B4675))))),
@@ -126,10 +131,10 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
             boxShadow:const [BoxShadow(color:Color(0x1B5E559A),
               blurRadius:16,offset:Offset(0,6))]),
           child:Column(children:[
-            const Text('Mèo muốn mua món nào?',
+            Text(widget.restaurant ? 'Mèo muốn gọi món nào?' : 'Mèo muốn mua món nào?',
               style:TextStyle(fontSize:17,fontWeight:FontWeight.w800)),
             const SizedBox(height:8),
-            Text('Find the ${target.name}!',
+            Text(widget.restaurant ? 'I want ${target.name}, please!' : 'Find the ${target.name}!',
               textAlign:TextAlign.center,
               style:const TextStyle(fontSize:27,fontWeight:FontWeight.w900,
                 color:Color(0xFF6545C4))),
