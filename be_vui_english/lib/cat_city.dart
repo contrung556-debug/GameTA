@@ -2,6 +2,7 @@ import 'dart:math';
 import 'be_vui_animated_city.dart';
 import 'be_vui_cat_portrait.dart';
 import 'be_vui_school_room.dart';
+import 'be_vui_progress.dart';
 import 'be_vui_market_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -17,7 +18,7 @@ class CatCityScreen extends StatefulWidget {
 
 class _CatCityScreenState extends State<CatCityScreen> {
   final FlutterTts voice = FlutterTts();
-  int stars = 0;
+  final progress = BeVuiProgress.instance;
   int hearts = 3;
   String? travelingTo;
   int tripNumber = 0;
@@ -41,11 +42,16 @@ class _CatCityScreenState extends State<CatCityScreen> {
   @override
   void initState() {
     super.initState();
+    progress.addListener(refreshProgress);
+    progress.load();
     voice.setLanguage('en-US');
     voice.setSpeechRate(.42);
   }
   @override
-  void dispose() { voice.stop(); super.dispose(); }
+  void refreshProgress() { if(mounted)setState(() {}); }
+  void reward() { progress.earnStars(1); }
+  @override
+  void dispose() { progress.removeListener(refreshProgress); voice.stop(); super.dispose(); }
   Future<void> say(String text) async {
     await voice.stop();
     await voice.speak(text);
@@ -53,7 +59,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
   void openRestaurant() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
       BeVuiMarketGame(restaurant: true,
-        onEarnStar: () => setState(() => stars++))));
+        onEarnStar: reward)));
   }
   void openSchool() {
     Navigator.of(context).push(MaterialPageRoute(builder: (schoolContext) =>
@@ -61,24 +67,24 @@ class _CatCityScreenState extends State<CatCityScreen> {
         Navigator.of(schoolContext).push(MaterialPageRoute(builder: (_) =>
           CatMissionScreen(title: 'Bài học ở trường',
             questions: challengeQuestions,
-            onStar: () => setState(() => stars++))));
+            onStar: reward)));
       })));
   }
   void openMarket() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
-      BeVuiMarketGame(onEarnStar: () => setState(() => stars++))));
+      BeVuiMarketGame(onEarnStar: reward)));
   }
   void openMission(String title, List<CatQuestion> questions) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
       CatMissionScreen(title: title, questions: questions,
-        onStar: () => setState(() => stars++))));
+        onStar: reward)));
   }
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('🐱 Thành phố Bé Vui',
       style: TextStyle(fontWeight: FontWeight.w900)), actions: [
       Center(child: Padding(padding: const EdgeInsets.only(right: 18),
-        child: Text('⭐ $stars', style: const TextStyle(fontSize: 18,
+        child: Text('⭐ ${progress.stars}', style: const TextStyle(fontSize: 18,
           fontWeight: FontWeight.bold)))),
     ]),
     body: ListView(padding: const EdgeInsets.all(16), children: [
@@ -165,6 +171,8 @@ class _CatCityScreenState extends State<CatCityScreen> {
           IconButton.filled(onPressed: () => say('Hello! Let us explore the city!'),
             icon: const Icon(Icons.volume_up_rounded)),
         ])),
+      Text('🏆 Đã hoàn thành: ${progress.completedLessons} bài học',
+        style: const TextStyle(fontWeight: FontWeight.w800,color:_purple)),
       const SizedBox(height: 20),
       const Text('Chăm sóc mèo 💗', style: TextStyle(fontSize: 22,
         color: _ink, fontWeight: FontWeight.w900)),
