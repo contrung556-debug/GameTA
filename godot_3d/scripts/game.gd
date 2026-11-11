@@ -293,19 +293,38 @@ func _setup_ui() -> void:
  _style_button(guide,GOLD)
  guide.pressed.connect(_show_guide)
  top.add_child(guide)
+ var sidebar := VBoxContainer.new()
+ sidebar.position=Vector2(14,100)
+ sidebar.add_theme_constant_override("separation",9)
+ ui.add_child(sidebar)
+ for entry in ["🏠 Trang chủ","📖 Từ vựng","🎮 Trò chơi","🏆 Thành tích"]:
+  var tab:=Button.new()
+  tab.text=entry
+  tab.custom_minimum_size=Vector2(180,48)
+  _style_button(tab,Color("#f5eaff"))
+  tab.pressed.connect(_show_guide if entry=="🏆 Thành tích" else _visit.bind("Trường học"))
+  sidebar.add_child(tab)
+ var play:=Button.new()
+ play.text="▶  VÀO THÀNH PHỐ"
+ play.custom_minimum_size=Vector2(310,62)
+ _style_button(play,Color("#ffb53e"))
+ play.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+ play.position=Vector2(-155,-220)
+ play.pressed.connect(_visit.bind("Trường học"))
+ ui.add_child(play)
  var bottom := PanelContainer.new()
  bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
  bottom.offset_left=16
  bottom.offset_right=-16
- bottom.offset_top=-135
- bottom.offset_bottom=-14
+ bottom.offset_top=-165
+ bottom.offset_bottom=-12
  bottom.add_theme_stylebox_override("panel",_style(Color("#eee2ff"),22,Color("#ffffff"),3))
  ui.add_child(bottom)
  var col := VBoxContainer.new()
  col.add_theme_constant_override("separation",8)
  bottom.add_child(col)
  var title := Label.new()
- title.text="🏙️  KHÁM PHÁ THÀNH PHỐ • CHỌN ĐỊA ĐIỂM"
+ title.text="✨  KHÁM PHÁ THÀNH PHỐ • CHỌN ĐỊA ĐIỂM"
  title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  title.add_theme_color_override("font_color",NAVY)
  title.add_theme_font_size_override("font_size",19)
