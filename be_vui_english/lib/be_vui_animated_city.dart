@@ -33,6 +33,8 @@ class _BeVuiAnimatedCityState extends State<BeVuiAnimatedCity>
             child:Transform.translate(
               offset:Offset((t-.5)*-12,0),
               child:const BeVuiCityArt())),
+          Positioned(right:((1-t)*290)-80,bottom:29,
+            child:const _MovingBus()),
           Positioned(left:0,right:0,bottom:2,
             child:IgnorePointer(child:CustomPaint(
               size:const Size(double.infinity,14),
@@ -63,6 +65,37 @@ class _GroundShadowPainter extends CustomPainter {
   void paint(Canvas canvas,Size size){
     final paint=Paint()..color=const Color(0x120B3052);
     canvas.drawRect(Rect.fromLTWH(0,0,size.width,size.height),paint);
+  }
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate)=>false;
+}
+
+class _MovingBus extends StatelessWidget {
+  const _MovingBus();
+  @override
+  Widget build(BuildContext context)=>SizedBox(
+    width:76,height:43,
+    child:CustomPaint(painter:_BusPainter()),
+  );
+}
+class _BusPainter extends CustomPainter {
+  @override
+  void paint(Canvas c,Size size){
+    final p=Paint()..isAntiAlias=true;
+    void rr(Rect r,Color color,double radius){
+      p.color=color;
+      c.drawRRect(RRect.fromRectAndRadius(r,Radius.circular(radius)),p);
+    }
+    rr(const Rect.fromLTWH(2,6,72,30),const Color(0xFFFFBC45),8);
+    rr(const Rect.fromLTWH(9,11,18,13),const Color(0xFFB6E8FC),3);
+    rr(const Rect.fromLTWH(31,11,18,13),const Color(0xFFB6E8FC),3);
+    rr(const Rect.fromLTWH(53,11,13,13),const Color(0xFFB6E8FC),3);
+    for(final x in [18.0,59.0]){
+      p.color=const Color(0xFF38435D);
+      c.drawCircle(Offset(x,36),7,p);
+      p.color=const Color(0xFFDDE3F4);
+      c.drawCircle(Offset(x,36),3,p);
+    }
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate)=>false;
