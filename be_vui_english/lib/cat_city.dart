@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'be_vui_city_art.dart';
+import 'be_vui_animated_city.dart';
 import 'be_vui_market_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -53,7 +53,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
     ]),
     body: ListView(padding: const EdgeInsets.all(16), children: [
       Stack(children: [
-        const BeVuiCityArt(),
+        const BeVuiAnimatedCity(),
         Positioned.fill(child: LayoutBuilder(builder: (context, constraints) {
           Widget hotspot(double x, double y, String title,
               List<CatQuestion> questions) => Positioned(
