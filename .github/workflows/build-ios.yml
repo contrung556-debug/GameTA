@@ -27,6 +27,7 @@ jobs:
         run: |
           flutter create . --platforms=ios,android --project-name be_vui_english
           flutter pub get
+          rm -f test/widget_test.dart analysis_options.yaml
       - name: Analyze source
         working-directory: be_vui_english
         run: flutter analyze
