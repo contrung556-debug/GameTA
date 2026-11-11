@@ -29,6 +29,11 @@ class _CatCityScreenState extends State<CatCityScreen> {
     await voice.stop();
     await voice.speak(text);
   }
+  void openRestaurant() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
+      BeVuiMarketGame(restaurant: true,
+        onEarnStar: () => setState(() => stars++))));
+  }
   void openMarket() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
       BeVuiMarketGame(onEarnStar: () => setState(() => stars++))));
@@ -60,7 +65,15 @@ class _CatCityScreenState extends State<CatCityScreen> {
                 shape: const CircleBorder(),
                 elevation: 4,
                 child: InkWell(customBorder: const CircleBorder(),
-                  onTap: () => title == 'Chợ' || title == 'Siêu thị' ? openMarket() : openMission(title, questions),
+                  onTap: () {
+                    if (title == 'Chợ' || title == 'Siêu thị') {
+                      openMarket();
+                    } else if (title == 'Nhà hàng') {
+                      openRestaurant();
+                    } else {
+                      openMission(title, questions);
+                    }
+                  },
                   child: const Padding(padding: EdgeInsets.all(10),
                     child: Icon(Icons.touch_app_rounded,
                       size: 19, color: Color(0xFF6B48C8)))))),
@@ -123,7 +136,15 @@ class _CatCityScreenState extends State<CatCityScreen> {
         padding: const EdgeInsets.only(bottom: 10),
         child: Material(color: item.$5, borderRadius: BorderRadius.circular(22),
           child: InkWell(borderRadius: BorderRadius.circular(22),
-            onTap: () => item.$2 == 'Chợ & siêu thị' ? openMarket() : openMission(item.$2, item.$4),
+            onTap: () {
+              if (item.$2 == 'Chợ & siêu thị') {
+                openMarket();
+              } else if (item.$2 == 'Nhà hàng') {
+                openRestaurant();
+              } else {
+                openMission(item.$2, item.$4);
+              }
+            },
             child: Padding(padding: const EdgeInsets.all(16),
               child: Row(children: [
                 Text(item.$1, style: const TextStyle(fontSize: 43)),
