@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// Isometric, 3D-styled city artwork with extruded buildings, lit roofs,
