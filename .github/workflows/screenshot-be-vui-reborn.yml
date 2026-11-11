@@ -1,0 +1,29 @@
+name: Capture Be Vui Reborn Screen
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'be_vui_reborn/**'
+      - '.github/workflows/screenshot-be-vui-reborn.yml'
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.3 and virtual display
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libgl1 libx11-6 unzip
+          wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip -O /tmp/godot.zip
+          unzip -q /tmp/godot.zip -d /tmp
+          sudo mv /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+      - name: Import project
+        run: godot --headless --path be_vui_reborn --editor --quit
+      - name: Capture actual rendered game
+        run: xvfb-run -a -s "-screen 0 1280x720x24" godot --path be_vui_reborn --rendering-method gl_compatibility --script res://scripts/screenshot.gd
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BeVuiReborn-Actual-Screenshot
+          path: be_vui_reborn/screenshot.png
+          if-no-files-found: error
