@@ -32,6 +32,8 @@ var title_label: Label
 var answer_buttons: Array[Button] = []
 var feedback: Label
 var game_paused := false
+var destination_marker: Node3D
+var camera_zoom := 23.5
 var locations := {
  "Trường học": Vector3(-6,0,-4),
  "Bệnh viện": Vector3(0,0,-5),
@@ -45,6 +47,7 @@ func _ready() -> void:
  _load_progress()
  _setup_world()
  _setup_ui()
+ _setup_marker()
 
 func _process(delta: float) -> void:
  if cat == null: return
@@ -54,7 +57,58 @@ func _process(delta: float) -> void:
   cat.position += delta_pos.normalized() * minf(delta * 3.0,delta_pos.length())
   cat.rotation.y = lerp_angle(cat.rotation.y,atan2(delta_pos.x,delta_pos.z),delta * 7.0)
  move_t += delta
+ if destination_marker != null and destination_marker.visible:
+  destination_marker.rotation.y += delta * 1.5
  cat.position.y = sin(move_t * 3.2) * 0.07
+
+func _unhandled_input(event: InputEvent) -> void:
+ if panel != null and panel.visible: return
+ if event is InputEventMouseButton:
+  if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+   camera_zoom=clampf(camera_zoom-1.0,18.0,32.0)
+   camera.size=camera_zoom
+   return
+  if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+   camera_zoom=clampf(camera_zoom+1.0,18.0,32.0)
+   camera.size=camera_zoom
+   return
+  if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+   _select_from_screen(event.position)
+ if event is InputEventScreenTouch and event.pressed:
+  _select_from_screen(event.position)
+
+func _select_from_screen(screen_pos: Vector2) -> void:
+ var nearest: String = ""
+ var best_distance := 85.0
+ for place in locations.keys():
+  var p: Vector3=locations[place]+Vector3(0,2.0,0)
+  var projected:=camera.unproject_position(p)
+  var distance:=screen_pos.distance_to(projected)
+  if distance < best_distance:
+   nearest=place
+   best_distance=distance
+ if nearest != "": _visit(nearest)
+
+func _setup_marker() -> void:
+ destination_marker=Node3D.new()
+ destination_marker.name="Destination highlight"
+ add_child(destination_marker)
+ var ring:=MeshInstance3D.new()
+ var mesh:=TorusMesh.new()
+ mesh.inner_radius=0.66
+ mesh.outer_radius=0.83
+ mesh.rings=24
+ mesh.ring_segments=48
+ ring.mesh=mesh
+ var material:=StandardMaterial3D.new()
+ material.albedo_color=Color("#ffe16a")
+ material.emission_enabled=true
+ material.emission=Color("#ffbd52")
+ material.emission_energy_multiplier=1.8
+ ring.material_override=material
+ ring.position.y=0.15
+ destination_marker.add_child(ring)
+ destination_marker.visible=false
 
 func _mat(color: Color, roughness: float = 0.7) -> StandardMaterial3D:
  var m := StandardMaterial3D.new()
@@ -414,6 +468,9 @@ func _pill(text: String,color: Color,font_size: int) -> Label:
 
 func _visit(place: String) -> void:
  destination=locations[place]+Vector3(0,0,2.7)
+ if destination_marker != null:
+  destination_marker.position=locations[place]+Vector3(0,0,2.7)
+  destination_marker.visible=true
  question_place=place
  question_index=0
  panel.visible=true
