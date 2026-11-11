@@ -1,0 +1,20 @@
+name: Validate Be Vui Godot 3D
+on:
+  push:
+    paths:
+      - 'godot_3d/**'
+      - '.github/workflows/validate-godot-3d.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import project and validate scripts
+        run: |
+          godot --headless --path godot_3d --editor --quit
+      - name: Smoke-test startup
+        run: |
+          timeout 25s godot --headless --path godot_3d --quit-after 5
