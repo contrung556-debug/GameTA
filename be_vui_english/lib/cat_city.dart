@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'be_vui_animated_city.dart';
 import 'be_vui_cat_portrait.dart';
+import 'be_vui_school_room.dart';
 import 'be_vui_market_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -27,7 +28,9 @@ class _CatCityScreenState extends State<CatCityScreen> {
   void arriveAt(String title, List<CatQuestion> questions) {
     if (!mounted || travelingTo != title) return;
     setState(() => travelingTo = null);
-    if (title == 'Chợ' || title == 'Siêu thị') {
+    if (title == 'Trường học') {
+      openSchool();
+    } else if (title == 'Chợ' || title == 'Siêu thị') {
       openMarket();
     } else if (title == 'Nhà hàng') {
       openRestaurant();
@@ -51,6 +54,15 @@ class _CatCityScreenState extends State<CatCityScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
       BeVuiMarketGame(restaurant: true,
         onEarnStar: () => setState(() => stars++))));
+  }
+  void openSchool() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (schoolContext) =>
+      BeVuiSchoolRoom(onStartLesson: () {
+        Navigator.of(schoolContext).push(MaterialPageRoute(builder: (_) =>
+          CatMissionScreen(title: 'Bài học ở trường',
+            questions: challengeQuestions,
+            onStar: () => setState(() => stars++))));
+      })));
   }
   void openMarket() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
@@ -191,6 +203,8 @@ class _CatCityScreenState extends State<CatCityScreen> {
                 openMarket();
               } else if (item.$2 == 'Nhà hàng') {
                 openRestaurant();
+              } else if (item.$2 == 'Trường học') {
+                openSchool();
               } else {
                 openMission(item.$2, item.$4);
               }
