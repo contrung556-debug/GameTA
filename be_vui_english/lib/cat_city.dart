@@ -96,14 +96,20 @@ class _CatCityScreenState extends State<CatCityScreen> {
             top: constraints.maxHeight * y - 20,
             child: Semantics(label: 'Mở nhiệm vụ $title',
               button: true,
-              child: Material(color: Colors.white.withValues(alpha: .92),
-                shape: const CircleBorder(),
-                elevation: 4,
-                child: InkWell(customBorder: const CircleBorder(),
+              child: Material(
+                color: const Color(0xFF6E40CC),
+                borderRadius: BorderRadius.circular(18),
+                elevation: 7,
+                shadowColor: const Color(0x886E40CC),
+                child: InkWell(borderRadius: BorderRadius.circular(18),
                   onTap: () => travelTo(title, questions),
-                  child: const Padding(padding: EdgeInsets.all(10),
-                    child: Icon(Icons.touch_app_rounded,
-                      size: 19, color: Color(0xFF6B48C8)))))),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: Colors.white, width: 2)),
+                    child: const Icon(Icons.play_arrow_rounded,
+                      size: 21, color: Colors.white))))),
           );
           return Stack(children: [
             if (travelingTo != null)
