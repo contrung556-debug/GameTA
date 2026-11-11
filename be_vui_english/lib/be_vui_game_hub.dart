@@ -164,7 +164,7 @@ class _BeVuiGameHubState extends State<BeVuiGameHub> {
                               const Text('CHƠI NGAY ▶',style:TextStyle(
                                 color:violet,fontSize:10,fontWeight:FontWeight.w900)),
                             ]))),
-                      )));
+                      ));
                   });
               })),
           ]),
