@@ -1,4 +1,4 @@
-name: Build Be Vui English iOS
+name: Build Be Vui English unsigned IPA
 
 on:
   workflow_dispatch:
@@ -17,35 +17,34 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
-      - name: Generate iOS and Android platform projects
+      - name: Generate iOS platform and dependencies
         working-directory: be_vui_english
         run: |
           flutter create . --platforms=ios,android --project-name be_vui_english
           flutter pub get
-
-      - name: Analyze Dart source
+      - name: Analyze source
         working-directory: be_vui_english
         run: flutter analyze
-
       - name: Build iOS without signing
         working-directory: be_vui_english
         run: flutter build ios --release --no-codesign
-
-      - name: Package unsigned iOS app for inspection
+      - name: Package unsigned IPA
+        shell: bash
         run: |
-          cd be_vui_english/build/ios/iphoneos
-          ditto -c -k --sequesterRsrc --keepParent Runner.app Runner-unsigned.zip
-
-      - name: Upload unsigned build artifact
+          set -euo pipefail
+          mkdir -p be_vui_english/build/ios/ipa/Payload
+          cp -R be_vui_english/build/ios/iphoneos/Runner.app be_vui_english/build/ios/ipa/Payload/
+          cd be_vui_english/build/ios/ipa
+          zip -qry BeVuiEnglish-unsigned.ipa Payload
+          test -s BeVuiEnglish-unsigned.ipa
+      - name: Upload unsigned IPA
         uses: actions/upload-artifact@v4
         with:
-          name: be-vui-english-ios-unsigned
-          path: be_vui_english/build/ios/iphoneos/Runner-unsigned.zip
+          name: BeVuiEnglish-unsigned-IPA
+          path: be_vui_english/build/ios/ipa/BeVuiEnglish-unsigned.ipa
           if-no-files-found: error
