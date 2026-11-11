@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'cat_city.dart';
 import 'be_vui_progress.dart';
-import 'be_vui_cat_portrait.dart';
+import 'be_vui_3d_cat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -64,7 +64,7 @@ class TopicScreen extends StatelessWidget {
       SliverToBoxAdapter(child:Padding(padding:const EdgeInsets.fromLTRB(20,18,20,8),
         child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
           const Row(children:[
-            BeVuiCatPortrait(size:54),
+            BeVui3DCat(size:54),
             SizedBox(width:12),
             Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
               Text('BÉ VUI ENGLISH',style:TextStyle(color:purple,fontSize:12,fontWeight:FontWeight.w900,letterSpacing:1.2)),
@@ -93,7 +93,7 @@ class TopicScreen extends StatelessWidget {
                     ])),
                     Container(width:118,height:138,
                       decoration:BoxDecoration(color:Colors.white.withValues(alpha:.16),borderRadius:BorderRadius.circular(25)),
-                      child:const Center(child:BeVuiCatPortrait(size:112))),
+                      child:const Center(child:BeVui3DCat(size:112))),
                   ])),
               ]))),
           const SizedBox(height:17),
