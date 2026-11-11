@@ -44,9 +44,9 @@ func _create_scene() -> void:
  camera=Camera3D.new()
  camera.projection=Camera3D.PROJECTION_ORTHOGONAL
  camera.size=17.0
- camera.position=Vector3(12,15,19)
+ camera.position=Vector3(10,11,19)
  add_child(camera)
- camera.look_at(Vector3.ZERO)
+ camera.look_at(Vector3(0,1,0))
  camera.current=true
  _box("Ground",Vector3(0,-0.15,0),Vector3(26,0.3,18),Color("#a1d99a"))
  _box("Path",Vector3(0,0.01,0),Vector3(24,0.05,2.3),Color("#f5d9b7"))
@@ -55,19 +55,17 @@ func _create_scene() -> void:
   var position:=Vector3(cos(angle)*8.0,0,sin(angle)*5.0)
   _box("ART SLOT "+str(i),position+Vector3(0,0.8,0),Vector3(2.5,1.6,2.3),Color("#e9dcf5"))
   _box("Roof placeholder",position+Vector3(0,1.7,0),Vector3(2.9,0.3,2.7),Color("#b6a3dc"))
- # Intentional marker, not a pretend polished mascot.
+ # Real mesh-based animated mascot with independent asset script.
  cat=Node3D.new()
- cat.name="CAT_3D_ASSET_SLOT"
- cat.position=Vector3(0,0,3)
+ cat.name="MascotAnchor"
+ cat.position=Vector3(3.5,0,3.0)
  scene_root.add_child(cat)
- var sphere:=SphereMesh.new()
- sphere.radius=0.45
- sphere.height=0.9
- var marker:=MeshInstance3D.new()
- marker.mesh=sphere
- marker.position.y=0.5
- marker.material_override=_material(Color("#a3a5bf"))
- cat.add_child(marker)
+ var mascot:=Node3D.new()
+ mascot.name="TomStyleOriginalCat"
+ mascot.set_script(load("res://scripts/mascot.gd"))
+ cat.add_child(mascot)
+ camera.position=Vector3(10,9,16)
+ camera.look_at(Vector3(1,1,0))
 
 func _material(color: Color) -> StandardMaterial3D:
  var m:=StandardMaterial3D.new()
@@ -98,7 +96,7 @@ func _create_ui() -> void:
  top.offset_top=16
  root.add_child(top)
  var heading:=Label.new()
- heading.text="BÉ VUI ENGLISH • REBORN"
+ heading.text="⭐  BÉ VUI ENGLISH 3D  ⭐"
  heading.add_theme_font_size_override("font_size",28)
  heading.add_theme_color_override("font_color",Color("#43256e"))
  heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -108,16 +106,22 @@ func _create_ui() -> void:
  status.add_theme_color_override("font_color",Color("#43256e"))
  top.add_child(status)
  var menu:=VBoxContainer.new()
- menu.position=Vector2(22,95)
+ menu.position=Vector2(30,120)
  menu.add_theme_constant_override("separation",10)
  root.add_child(menu)
  for place in LESSONS.keys():
   var b:=Button.new()
   b.text=place
-  b.custom_minimum_size=Vector2(170,48)
-  _decorate_button(b,Color("#7548d9"))
+  b.custom_minimum_size=Vector2(260,65)
+  _decorate_button(b,[Color("#f66cae"),Color("#8a65e9"),Color("#38b9f0"),Color("#57c969"),Color("#ffb43e")][menu.get_child_count()])
   b.pressed.connect(_start_lesson.bind(place))
   menu.add_child(b)
+ var subtitle:=Label.new()
+ subtitle.text="🐱  Cùng Mèo Bé Vui học tiếng Anh thật vui!"
+ subtitle.position=Vector2(35,83)
+ subtitle.add_theme_font_size_override("font_size",22)
+ subtitle.add_theme_color_override("font_color",Color("#61337c"))
+ root.add_child(subtitle)
  var overlay:=PanelContainer.new()
  overlay.name="LessonOverlay"
  overlay.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
