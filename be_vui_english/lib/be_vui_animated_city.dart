@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'be_vui_cat_portrait.dart';
-import 'be_vui_city_art.dart';
+import 'be_vui_3d_cat.dart';
+import 'be_vui_isometric_city.dart';
 
 /// Animated city with a walking mascot and a gentle camera-like pan.
 class BeVuiAnimatedCity extends StatefulWidget {
@@ -32,7 +32,7 @@ class _BeVuiAnimatedCityState extends State<BeVuiAnimatedCity>
           Transform.scale(scale:1.045,
             child:Transform.translate(
               offset:Offset((t-.5)*-12,0),
-              child:const BeVuiCityArt())),
+              child:const BeVuiIsometricCity())),
           Positioned(right:((1-t)*290)-80,bottom:29,
             child:const _MovingBus()),
           Positioned(left:t*220-55,bottom:16,
@@ -53,7 +53,7 @@ class _BeVuiAnimatedCityState extends State<BeVuiAnimatedCity>
             left:18+t*74,
             bottom:9+walk.abs()*3,
             child:Transform.rotate(angle:walk*.045,
-              child:const BeVuiCatPortrait(size:73))),
+              child:const BeVui3DCat(size:73))),
           Positioned(
             left:12+t*74,
             bottom:82,
