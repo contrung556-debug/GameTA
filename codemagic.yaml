@@ -1,0 +1,24 @@
+workflows:
+  ios-validation:
+    name: Be Vui English iOS validation
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Generate platform project and get dependencies
+        script: |
+          cd be_vui_english
+          flutter create . --platforms=ios,android --project-name be_vui_english
+          flutter pub get
+      - name: Analyze Flutter code
+        script: |
+          cd be_vui_english
+          flutter analyze
+      - name: Compile unsigned iOS app
+        script: |
+          cd be_vui_english
+          flutter build ios --release --no-codesign
+    artifacts:
+      - be_vui_english/build/ios/iphoneos/*.app
