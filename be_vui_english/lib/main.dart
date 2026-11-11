@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 void main() => runApp(const BeVuiEnglish());
+
 class Topic {
   final String title, emoji;
   final List<String> words;
@@ -20,39 +21,127 @@ const topics = <Topic>[
   Topic('Phương tiện','🚗',['Car|🚗','Bus|🚌','Bike|🚲','Train|🚆','Plane|✈️','Boat|⛵','Ship|🚢','Taxi|🚕','Truck|🚚','Helicopter|🚁']),
   Topic('Trong nhà','🏠',['House|🏠','Door|🚪','Window|🪟','Bed|🛏️','Chair|🪑','Lamp|💡','Clock|🕒','Key|🔑','Book|📖','Television|📺'])
 ];
+
+const cream = Color(0xFFFFF9EF);
+const ink = Color(0xFF263454);
+const purple = Color(0xFF7957E8);
+const pink = Color(0xFFFFDBE5);
+const mint = Color(0xFFD6F6E8);
+const peach = Color(0xFFFFE7CE);
+const lavender = Color(0xFFE7E0FF);
+
 class BeVuiEnglish extends StatelessWidget {
   const BeVuiEnglish({super.key});
-  @override Widget build(BuildContext context) => MaterialApp(
-    title:'Bé Vui English',debugShowCheckedModeBanner:false,
-    theme:ThemeData(colorScheme:ColorScheme.fromSeed(seedColor:const Color(0xff5cbdb3)),useMaterial3:true),
-    home:const TopicScreen());
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Bé Vui English',
+    theme: ThemeData(
+      useMaterial3: true,
+      scaffoldBackgroundColor: cream,
+      colorScheme: ColorScheme.fromSeed(seedColor: purple),
+      fontFamily: 'Roboto',
+      appBarTheme: const AppBarTheme(backgroundColor: cream, foregroundColor: ink),
+    ),
+    home: const TopicScreen(),
+  );
 }
+
 class TopicScreen extends StatelessWidget {
   const TopicScreen({super.key});
-  @override Widget build(BuildContext context) => Scaffold(
-    appBar:AppBar(title:const Text('🌟 Bé Vui English')),
-    body:GridView.builder(padding:const EdgeInsets.all(16),itemCount:topics.length,
-      gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2,mainAxisSpacing:12,crossAxisSpacing:12,childAspectRatio:1.12),
-      itemBuilder:(context,i)=>Card(child:InkWell(
-        onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>LessonScreen(topic:topics[i]))),
-        child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[
-          Text(topics[i].emoji,style:const TextStyle(fontSize:44)),
-          Text(topics[i].title,style:const TextStyle(fontSize:18,fontWeight:FontWeight.bold))
-        ])))));
+  static const tileColors = [pink, mint, lavender, peach];
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: SafeArea(child: CustomScrollView(slivers: [
+      SliverToBoxAdapter(child: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 24, 22, 12),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Row(children: [
+            CircleAvatar(backgroundColor: lavender, radius: 23,
+              child: Text('🐻', style: TextStyle(fontSize: 26))),
+            SizedBox(width: 12),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('BÉ VUI ENGLISH', style: TextStyle(color: purple, fontSize: 12,
+                  fontWeight: FontWeight.w900, letterSpacing: 1.2)),
+                Text('Xin chào, bé yêu! 👋', style: TextStyle(color: ink,
+                  fontSize: 22, fontWeight: FontWeight.w900)),
+              ])),
+          ]),
+          const SizedBox(height: 22),
+          Container(width: double.infinity, padding: const EdgeInsets.all(22),
+            decoration: BoxDecoration(color: purple, borderRadius: BorderRadius.circular(28)),
+            child: const Row(children: [
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Cùng học tiếng Anh!', style: TextStyle(color: Colors.white,
+                    fontSize: 23, fontWeight: FontWeight.w900)),
+                  SizedBox(height: 8),
+                  Text('10 chủ đề • 100 từ vựng\nNghe, nhìn và chơi thật vui',
+                    style: TextStyle(color: Color(0xFFF1EAFF), fontSize: 14, height: 1.5)),
+                ])),
+              Text('🚀', style: TextStyle(fontSize: 60)),
+            ])),
+          const SizedBox(height: 25),
+          const Text('Khám phá chủ đề ✨', style: TextStyle(
+            color: ink, fontSize: 23, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 6),
+          const Text('Chọn một chủ đề để bắt đầu nhé!',
+            style: TextStyle(color: Color(0xFF737B92), fontSize: 14)),
+        ]),
+      )),
+      SliverPadding(
+        padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
+        sliver: SliverGrid.builder(
+          itemCount: topics.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 13, mainAxisSpacing: 13,
+            childAspectRatio: .92),
+          itemBuilder: (context, i) => Material(
+            color: tileColors[i % tileColors.length],
+            borderRadius: BorderRadius.circular(25),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(25),
+              onTap: () => Navigator.push(context, MaterialPageRoute(
+                builder: (_) => LessonScreen(topic: topics[i]))),
+              child: Padding(padding: const EdgeInsets.all(14),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(child: Center(child: Text(topics[i].emoji,
+                    style: const TextStyle(fontSize: 61)))),
+                  Text(topics[i].title, style: const TextStyle(color: ink,
+                    fontSize: 18, fontWeight: FontWeight.w900)),
+                  const SizedBox(height: 4),
+                  const Row(children: [
+                    Text('10 từ vựng', style: TextStyle(color: Color(0xFF5C6480), fontSize: 12)),
+                    Spacer(),
+                    Icon(Icons.arrow_forward_rounded, color: ink, size: 19),
+                  ]),
+                ])),
+            ),
+          ),
+        ),
+      ),
+    ])),
+  );
 }
+
 class LessonScreen extends StatefulWidget {
   final Topic topic;
-  const LessonScreen({super.key,required this.topic});
-  @override State<LessonScreen> createState()=>_LessonScreenState();
+  const LessonScreen({super.key, required this.topic});
+  @override
+  State<LessonScreen> createState() => _LessonScreenState();
 }
+
 class _LessonScreenState extends State<LessonScreen> {
-  final tts=FlutterTts();
-  int index=0,stars=0;
-  bool quiz=false,correct=false;
-  List<String> choices=[];
-  String word(String entry)=>entry.split('|')[0];
-  String picture(String entry)=>entry.split('|')[1];
-  @override void initState(){
+  final tts = FlutterTts();
+  int index = 0, stars = 0;
+  bool quiz = false, correct = false;
+  List<String> choices = [];
+  String word(String entry) => entry.split('|')[0];
+  String picture(String entry) => entry.split('|')[1];
+
+  @override
+  void initState() {
     super.initState();
     tts.setLanguage('en-US');
     tts.setSpeechRate(0.42);
@@ -61,49 +150,149 @@ class _LessonScreenState extends State<LessonScreen> {
     await tts.stop();
     await tts.speak(text);
   }
-  void beginQuiz(){
-    final target=widget.topic.words[index];
-    final others=widget.topic.words.where((w)=>w!=target).toList()..shuffle(Random());
-    setState((){quiz=true;correct=false;choices=[target,...others.take(2)]..shuffle(Random());});
+  void beginQuiz() {
+    final target = widget.topic.words[index];
+    final others = widget.topic.words.where((w) => w != target).toList()
+      ..shuffle(Random());
+    setState(() {
+      quiz = true;
+      correct = false;
+      choices = [target, ...others.take(2)]..shuffle(Random());
+    });
     speak('Find the ${word(target)}');
   }
-  void choose(String selected){
-    if(correct)return;
-    if(selected==widget.topic.words[index]){
-      setState((){correct=true;stars++;});
+  void choose(String selected) {
+    if (correct) return;
+    if (selected == widget.topic.words[index]) {
+      setState(() { correct = true; stars++; });
       speak('Great job!');
-    }else{speak('Try again');}
+    } else {
+      speak('Try again');
+    }
   }
-  void next(){
-    if(index+1==widget.topic.words.length){Navigator.pop(context);return;}
-    setState((){index++;quiz=false;correct=false;});
+  void next() {
+    if (index + 1 == widget.topic.words.length) {
+      Navigator.pop(context);
+      return;
+    }
+    setState(() { index++; quiz = false; correct = false; });
   }
-  @override void dispose(){tts.stop();super.dispose();}
-  @override Widget build(BuildContext context){
-    final entry=widget.topic.words[index];
-    return Scaffold(appBar:AppBar(title:Text(widget.topic.title)),
-      body:SafeArea(child:Padding(padding:const EdgeInsets.all(18),child:Column(children:[
-        LinearProgressIndicator(value:(index+1)/widget.topic.words.length),
-        const SizedBox(height:16),
-        Text('⭐ $stars   ${index+1}/${widget.topic.words.length}',style:const TextStyle(fontSize:20)),
-        const Spacer(),
-        if(!quiz)...[
-          Text(picture(entry),style:const TextStyle(fontSize:110)),
-          Text(word(entry),style:const TextStyle(fontSize:34,fontWeight:FontWeight.bold)),
-          const SizedBox(height:20),
-          FilledButton.icon(onPressed:()=>speak(word(entry)),icon:const Icon(Icons.volume_up),label:const Text('Nghe phát âm')),
-        ]else...[
-          const Text('Bé hãy chọn hình đúng!',style:TextStyle(fontSize:23)),
-          OutlinedButton.icon(onPressed:()=>speak('Find the ${word(entry)}'),icon:const Icon(Icons.volume_up),label:const Text('Nghe lại')),
-          ...choices.map((s)=>Padding(padding:const EdgeInsets.all(5),child:SizedBox(
-            width:double.infinity,height:70,
-            child:FilledButton.tonal(onPressed:correct?null:()=>choose(s),child:Text(picture(s),style:const TextStyle(fontSize:40)))))),
-          if(correct)const Text('🌟 Giỏi lắm!')
-        ],
-        const Spacer(),
-        SizedBox(width:double.infinity,height:60,child:FilledButton(
-          onPressed:quiz?(correct?next:null):beginQuiz,
-          child:Text(quiz?'Tiếp tục':'Chơi thử 🎮')))
-      ]))));
+  @override
+  void dispose() {
+    tts.stop();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    final entry = widget.topic.words[index];
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(widget.topic.title,
+          style: const TextStyle(fontWeight: FontWeight.w900)),
+        actions: [Padding(
+          padding: const EdgeInsets.only(right: 18),
+          child: Center(child: Text('⭐ $stars',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+        )],
+      ),
+      body: SafeArea(child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 22),
+        child: Column(children: [
+          Row(children: [
+            Text('Bài ${index + 1}/${widget.topic.words.length}',
+              style: const TextStyle(color: ink, fontWeight: FontWeight.w800)),
+            const Spacer(),
+            Text(quiz ? '🎯 Thử tài' : '📖 Học từ mới',
+              style: const TextStyle(color: purple, fontWeight: FontWeight.w800)),
+          ]),
+          const SizedBox(height: 12),
+          ClipRRect(borderRadius: BorderRadius.circular(12),
+            child: LinearProgressIndicator(
+              value: (index + 1) / widget.topic.words.length,
+              minHeight: 10, backgroundColor: lavender,
+              valueColor: const AlwaysStoppedAnimation(purple))),
+          const SizedBox(height: 22),
+          Expanded(child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(color: Colors.white,
+              borderRadius: BorderRadius.circular(32),
+              boxShadow: const [BoxShadow(color: Color(0x0D3A2C69),
+                blurRadius: 22, offset: Offset(0, 10))]),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: quiz
+                ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Text('Bé chọn hình đúng nhé! 🎯',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: ink, fontSize: 22,
+                        fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 16),
+                    OutlinedButton.icon(
+                      onPressed: () => speak('Find the ${word(entry)}'),
+                      icon: const Icon(Icons.volume_up_rounded),
+                      label: Text('Nghe: ${word(entry)}')),
+                    const SizedBox(height: 12),
+                    ...choices.map((s) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: SizedBox(width: double.infinity, height: 78,
+                        child: FilledButton.tonal(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: correct && s == entry ? mint : lavender,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                          onPressed: correct ? null : () => choose(s),
+                          child: Text(picture(s),
+                            style: const TextStyle(fontSize: 45))))),
+                    ),
+                    if (correct) const Padding(
+                      padding: EdgeInsets.only(top: 12),
+                      child: Text('🌟 Giỏi lắm!',
+                        style: TextStyle(fontSize: 23, color: purple,
+                          fontWeight: FontWeight.w900))),
+                  ])
+                : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Container(
+                      width: 210, height: 210,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFFFF2E5), shape: BoxShape.circle),
+                      child: Text(picture(entry),
+                        style: const TextStyle(fontSize: 110))),
+                    const SizedBox(height: 25),
+                    Text(word(entry),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: ink,
+                        fontSize: 36, fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 20),
+                    FilledButton.icon(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: mint, foregroundColor: ink,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 16)),
+                      onPressed: () => speak(word(entry)),
+                      icon: const Icon(Icons.volume_up_rounded),
+                      label: const Text('Nghe phát âm 🔊',
+                        style: TextStyle(fontWeight: FontWeight.w800))),
+                  ]),
+            ),
+          )),
+          const SizedBox(height: 18),
+          SizedBox(width: double.infinity, height: 62,
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22))),
+              onPressed: quiz ? (correct ? next : null) : beginQuiz,
+              child: Text(quiz
+                ? (index + 1 == widget.topic.words.length ? 'Hoàn thành 🎉' : 'Tiếp tục ➜')
+                : 'Chơi thử nào! 🎮',
+                style: const TextStyle(fontSize: 19,
+                  fontWeight: FontWeight.w900))),
+          ),
+        ]),
+      )),
+    );
   }
 }
