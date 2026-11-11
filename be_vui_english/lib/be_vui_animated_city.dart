@@ -57,7 +57,7 @@ class _BeVuiAnimatedCityState extends State<BeVuiAnimatedCity>
                   fontSize:11,fontWeight:FontWeight.w800,
                   color:Color(0xFF4D4A82)))))),
         ]);
-      }))),
+      })),
   );
 }
 class _GroundShadowPainter extends CustomPainter {
