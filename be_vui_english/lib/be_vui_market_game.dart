@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'be_vui_food_art.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -10,19 +11,19 @@ class BeVuiMarketGame extends StatefulWidget {
   State<BeVuiMarketGame> createState() => _BeVuiMarketGameState();
 }
 class _MarketItem {
-  final String name, vi, icon;
+  final String name, vi;
   final Color color;
-  const _MarketItem(this.name, this.vi, this.icon, this.color);
+  const _MarketItem(this.name, this.vi, this.color);
 }
 const _items = [
-  _MarketItem('apple','Táo','🍎',Color(0xFFFFD9E2)),
-  _MarketItem('banana','Chuối','🍌',Color(0xFFFFEDB0)),
-  _MarketItem('carrot','Cà rốt','🥕',Color(0xFFFFD8B8)),
-  _MarketItem('fish','Cá','🐟',Color(0xFFC9F4FC)),
-  _MarketItem('bread','Bánh mì','🍞',Color(0xFFFFE4BD)),
-  _MarketItem('milk','Sữa','🥛',Color(0xFFD9E8FF)),
-  _MarketItem('grapes','Nho','🍇',Color(0xFFE8D9FF)),
-  _MarketItem('pizza','Pizza','🍕',Color(0xFFFFDBCE)),
+  _MarketItem('apple','Táo',Color(0xFFFFD9E2)),
+  _MarketItem('banana','Chuối',Color(0xFFFFEDB0)),
+  _MarketItem('carrot','Cà rốt',Color(0xFFFFD8B8)),
+  _MarketItem('fish','Cá',Color(0xFFC9F4FC)),
+  _MarketItem('bread','Bánh mì',Color(0xFFFFE4BD)),
+  _MarketItem('milk','Sữa',Color(0xFFD9E8FF)),
+  _MarketItem('grapes','Nho',Color(0xFFE8D9FF)),
+  _MarketItem('pizza','Pizza',Color(0xFFFFDBCE)),
 ];
 class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
   final voice = FlutterTts();
@@ -153,7 +154,7 @@ class _BeVuiMarketGameState extends State<BeVuiMarketGame> {
                 borderRadius:BorderRadius.circular(24),
                 child:Column(mainAxisAlignment:MainAxisAlignment.center,
                   children:[
-                    Text(item.icon,style:const TextStyle(fontSize:55)),
+                    BeVuiFoodArt(food:item.name),
                     Text(item.name,style:const TextStyle(
                       fontSize:19,fontWeight:FontWeight.w900,
                       color:Color(0xFF29375B))),
