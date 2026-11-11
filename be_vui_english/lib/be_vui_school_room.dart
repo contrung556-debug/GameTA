@@ -106,7 +106,7 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
                         : Colors.white,
                       padding:const EdgeInsets.symmetric(vertical:15)),
                     child:Column(mainAxisSize:MainAxisSize.min,children:[
-                      BeVuiFoodArt(food:choice,size:65),
+                      BeVuiFoodArt(food:choice),
                       const SizedBox(height:4),
                       Text(choice,style:const TextStyle(fontSize:11,
                         fontWeight:FontWeight.w700)),
