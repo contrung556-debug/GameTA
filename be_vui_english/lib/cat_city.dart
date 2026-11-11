@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'be_vui_animated_city.dart';
-import 'be_vui_cat_portrait.dart';
+import 'be_vui_3d_cat.dart';
 import 'be_vui_school_room.dart';
 import 'be_vui_progress.dart';
 import 'be_vui_market_game.dart';
@@ -142,7 +142,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: .9),
                         shape: BoxShape.circle),
-                      child: const BeVuiCatPortrait(size: 38)))),
+                      child: const BeVui3DCat(size: 38)))),
                   ]);
                 },
               )),
