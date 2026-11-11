@@ -125,7 +125,7 @@ class _CatCityScreenState extends State<CatCityScreen> {
                         color: Colors.white.withValues(alpha: .9),
                         shape: BoxShape.circle),
                       child: const Icon(Icons.pets_rounded,
-                        size: 24, color: Color(0xFF7957E8)))),
+                        size: 24, color: Color(0xFF7957E8))))),
                   ]);
                 },
               )),
