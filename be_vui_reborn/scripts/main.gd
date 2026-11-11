@@ -16,6 +16,7 @@ var answers: VBoxContainer
 var scene_root: Node3D
 var cat: Node3D
 var camera: Camera3D
+var selected_button: Button
 
 func _ready() -> void:
  _load()
@@ -114,6 +115,7 @@ func _create_ui() -> void:
   var b:=Button.new()
   b.text=place
   b.custom_minimum_size=Vector2(170,48)
+  _decorate_button(b,Color("#7548d9"))
   b.pressed.connect(_start_lesson.bind(place))
   menu.add_child(b)
  var overlay:=PanelContainer.new()
@@ -122,6 +124,14 @@ func _create_ui() -> void:
  overlay.custom_minimum_size=Vector2(430,350)
  overlay.position=Vector2(-215,-175)
  overlay.visible=false
+ var panel_style:=StyleBoxFlat.new()
+ panel_style.bg_color=Color("#fff4df")
+ panel_style.set_corner_radius_all(26)
+ panel_style.set_border_width_all(5)
+ panel_style.border_color=Color("#ffffff")
+ panel_style.shadow_color=Color(0.25,0.14,0.4,0.35)
+ panel_style.shadow_size=15
+ overlay.add_theme_stylebox_override("panel",panel_style)
  root.add_child(overlay)
  answers=VBoxContainer.new()
  answers.add_theme_constant_override("separation",12)
@@ -166,6 +176,7 @@ func _render_question() -> void:
   var b:=Button.new()
   b.text=option
   b.custom_minimum_size=Vector2(360,52)
+  _decorate_button(b,Color("#7953d6"))
   b.pressed.connect(_choose.bind(option,str(entry[0])))
   answers.add_child(b)
  var exit:=Button.new()
@@ -183,6 +194,26 @@ func _choose(chosen: String,correct: String) -> void:
   add_child(tip)
   tip.popup_centered()
   tip.confirmed.connect(tip.queue_free)
+
+func _decorate_button(b: Button,color: Color) -> void:
+ b.add_theme_font_size_override("font_size",22)
+ b.add_theme_color_override("font_color",Color.WHITE)
+ b.add_theme_color_override("font_hover_color",Color.WHITE)
+ b.add_theme_color_override("font_pressed_color",Color.WHITE)
+ var style:=StyleBoxFlat.new()
+ style.bg_color=color
+ style.set_corner_radius_all(17)
+ style.set_border_width_all(3)
+ style.border_color=Color("#ffffff")
+ style.shadow_color=Color(0.3,0.16,0.47,0.3)
+ style.shadow_size=6
+ b.add_theme_stylebox_override("normal",style)
+ var hover:=style.duplicate() as StyleBoxFlat
+ hover.bg_color=color.lightened(0.2)
+ b.add_theme_stylebox_override("hover",hover)
+ var pressed:=style.duplicate() as StyleBoxFlat
+ pressed.bg_color=color.darkened(0.15)
+ b.add_theme_stylebox_override("pressed",pressed)
 
 func _update_status() -> void:
  status.text="⭐ %d" % stars
