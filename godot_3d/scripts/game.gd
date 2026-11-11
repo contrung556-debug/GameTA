@@ -356,7 +356,14 @@ func _setup_ui() -> void:
   tab.text=entry
   tab.custom_minimum_size=Vector2(180,48)
   _style_button(tab,Color("#f5eaff"))
-  tab.pressed.connect(_show_guide if entry=="🏆 Thành tích" else _visit.bind("Trường học"))
+  if entry=="🏆 Thành tích":
+   tab.pressed.connect(_show_achievements)
+  elif entry=="🏠 Trang chủ":
+   tab.pressed.connect(_close_lesson)
+  elif entry=="📖 Từ vựng":
+   tab.pressed.connect(_visit.bind("Trường học"))
+  else:
+   tab.pressed.connect(_visit.bind("Công viên"))
   sidebar.add_child(tab)
  var play:=Button.new()
  play.text="▶  VÀO THÀNH PHỐ"
@@ -525,6 +532,14 @@ func _close_lesson() -> void:
 
 func _update_score() -> void:
  score_label.text="⭐ %d  🏆 %d" % [stars,completed]
+
+func _show_achievements() -> void:
+ var d:=AcceptDialog.new()
+ d.title="Thành tích Bé Vui"
+ d.dialog_text="⭐ Tổng sao: %d\n🏆 Bài đã hoàn thành: %d\n\nTiếp tục khám phá thành phố để nhận thêm sao!" % [stars,completed]
+ add_child(d)
+ d.popup_centered()
+ d.confirmed.connect(d.queue_free)
 
 func _show_guide() -> void:
  var d:=AcceptDialog.new()
