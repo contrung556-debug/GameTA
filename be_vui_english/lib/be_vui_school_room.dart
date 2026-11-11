@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'be_vui_cat_portrait.dart';
 import 'be_vui_food_art.dart';
+import 'be_vui_progress.dart';
 
 /// A dedicated illustrated classroom before the existing English quiz.
 class BeVuiSchoolRoom extends StatefulWidget {
@@ -40,12 +41,14 @@ class _BeVuiSchoolRoomState extends State<BeVuiSchoolRoom> {
       selected=answer;
       if(isCorrect)correctCount++;
     });
+    if(isCorrect) BeVuiProgress.instance.earnStars(1);
     speech.stop().then((_) => speech.speak(
       isCorrect ? 'Great job!' : 'Good try!'));
   }
   void next(){
     if(questionIndex==exercises.length-1){
       setState(() => finished=true);
+      BeVuiProgress.instance.completeLesson();
       speech.stop().then((_) => speech.speak('Lesson complete! Well done!'));
     }else{setState(() {questionIndex++;selected=null;});}
   }
