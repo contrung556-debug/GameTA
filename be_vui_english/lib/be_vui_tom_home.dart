@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'main.dart' show TopicScreen;
 
@@ -50,11 +51,11 @@ class _BeVuiTomHomeState extends State<BeVuiTomHome> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                'assets/images/tom_home.jpg',
+              SvgPicture.asset(
+                'assets/images/tom_home.svg',
                 fit: BoxFit.fill,
                 errorBuilder: (context, error, stack) => const Center(
-                  child: Text('Thiếu hình nền: assets/images/tom_home.jpg',
+                  child: Text('Thiếu hình nền: assets/images/tom_home.svg',
                     textAlign: TextAlign.center),
                 ),
               ),
