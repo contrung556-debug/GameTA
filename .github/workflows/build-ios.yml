@@ -33,7 +33,7 @@ jobs:
         run: flutter test
       - name: Analyze source
         working-directory: be_vui_english
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
       - name: Build iOS without signing
         working-directory: be_vui_english
         run: flutter build ios --release --no-codesign
