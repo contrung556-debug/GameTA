@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+<defs>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#3ba8ff"/><stop offset="1" stop-color="#b7f5ff"/></linearGradient>
+<linearGradient id="grass" x2="0" y2="1"><stop stop-color="#a5ef69"/><stop offset="1" stop-color="#39bb66"/></linearGradient>
+<linearGradient id="fur" x2="1" y2="1"><stop stop-color="#e5e6f4"/><stop offset=".6" stop-color="#9ea3c0"/><stop offset="1" stop-color="#686f94"/></linearGradient>
+<linearGradient id="shirt" x2="1" y2="1"><stop stop-color="#60d9ff"/><stop offset=".6" stop-color="#2375e7"/><stop offset="1" stop-color="#193f9d"/></linearGradient>
+<linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fffca1"/><stop offset=".55" stop-color="#ffd03e"/><stop offset="1" stop-color="#f48625"/></linearGradient>
+<linearGradient id="pink" x2="0" y2="1"><stop stop-color="#ffb7f3"/><stop offset=".5" stop-color="#f35ab9"/><stop offset="1" stop-color="#b82e97"/></linearGradient>
+<linearGradient id="blue" x2="0" y2="1"><stop stop-color="#a2f5ff"/><stop offset=".5" stop-color="#42c2f4"/><stop offset="1" stop-color="#2373d9"/></linearGradient>
+<linearGradient id="green" x2="0" y2="1"><stop stop-color="#b9ffb0"/><stop offset=".5" stop-color="#5cdb5d"/><stop offset="1" stop-color="#299e5c"/></linearGradient>
+<linearGradient id="purple" x2="0" y2="1"><stop stop-color="#e7c3ff"/><stop offset=".5" stop-color="#b077f5"/><stop offset="1" stop-color="#6e45b5"/></linearGradient>
+<filter id="shadow"><feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#254277" flood-opacity=".35"/></filter>
+<filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+</defs>
+<rect width="1672" height="941" fill="url(#sky)"/>
+<circle cx="1400" cy="145" r="88" fill="#fff9b2" opacity=".85"/>
+<g fill="#fff" opacity=".85"><ellipse cx="260" cy="166" rx="145" ry="39"/><circle cx="195" cy="139" r="52"/><circle cx="277" cy="127" r="70"/><ellipse cx="1040" cy="130" rx="140" ry="32"/><circle cx="990" cy="110" r="48"/><circle cx="1085" cy="109" r="57"/></g>
+<path d="M0 530 Q250 350 520 505 Q820 320 1090 490 Q1350 320 1672 465 V941 H0" fill="#6bca76"/>
+<path d="M0 655 Q300 500 580 615 Q1000 460 1672 590 V941 H0" fill="url(#grass)"/>
+<path d="M750 940 Q710 785 905 670 Q1020 610 1010 580 L1150 580 Q1200 700 1080 795 Q1010 850 1025 941" fill="#ffe9a4" opacity=".85"/>
+<g opacity=".9"><path d="M20 695 Q70 600 105 690" stroke="#31945c" stroke-width="17" fill="none"/><circle cx="74" cy="652" r="48" fill="#4fcb75"/><circle cx="38" cy="671" r="40" fill="#6fe68b"/><circle cx="120" cy="670" r="38" fill="#7ce58c"/><path d="M1570 700 V485" stroke="#9e603b" stroke-width="40"/><circle cx="1540" cy="460" r="100" fill="#2dba69"/><circle cx="1610" cy="440" r="100" fill="#55d977"/><circle cx="1500" cy="420" r="78" fill="#6be989"/></g>
+<g font-family="DejaVu Sans,Arial,sans-serif" font-weight="900" text-anchor="middle" filter="url(#shadow)">
+<text x="665" y="118" font-size="91" stroke="#ffffff" stroke-width="15" paint-order="stroke" fill="#ffad37">BÉ VUI ENGLISH</text>
+<text x="660" y="175" font-size="42" stroke="#fff" stroke-width="7" paint-order="stroke" fill="#6c4db5">HỌC TIẾNG ANH CÙNG MÈO TOM!</text>
+</g>
+<!-- friendly large gray cat -->
+<g filter="url(#shadow)">
+<ellipse cx="475" cy="840" rx="280" ry="57" fill="#347b68" opacity=".27"/>
+<path d="M260 630 Q190 565 177 635 Q155 735 260 764" fill="none" stroke="#858daa" stroke-width="65" stroke-linecap="round"/>
+<ellipse cx="480" cy="670" rx="206" ry="223" fill="url(#shirt)" stroke="#f4ffff" stroke-width="15"/>
+<path d="M365 538 Q470 585 600 537 L557 770 Q460 820 386 770 Z" fill="#fff" opacity=".96"/>
+<path d="M423 677 L474 627 524 677 510 737 439 737Z" fill="url(#gold)" stroke="#f6a12d" stroke-width="8"/>
+<path d="M305 575 Q220 605 225 688 Q235 750 304 729" fill="url(#fur)" stroke="#fff" stroke-width="10"/>
+<path d="M632 570 Q714 588 710 661 Q698 724 643 706" fill="url(#fur)" stroke="#fff" stroke-width="10"/>
+<ellipse cx="380" cy="839" rx="106" ry="56" fill="url(#fur)" stroke="#fff" stroke-width="10"/>
+<ellipse cx="582" cy="839" rx="106" ry="56" fill="url(#fur)" stroke="#fff" stroke-width="10"/>
+<path d="M283 273 L313 105 433 202Z" fill="url(#fur)" stroke="#fff" stroke-width="11"/>
+<path d="M558 207 L677 105 697 293Z" fill="url(#fur)" stroke="#fff" stroke-width="11"/>
+<path d="M311 239 L330 159 398 221Z" fill="#f5a8c2"/><path d="M600 223 L663 158 674 251Z" fill="#f5a8c2"/>
+<ellipse cx="492" cy="348" rx="238" ry="224" fill="url(#fur)" stroke="#f5f6ff" stroke-width="13"/>
+<ellipse cx="404" cy="344" rx="67" ry="92" fill="#fff"/><ellipse cx="565" cy="344" rx="67" ry="92" fill="#fff"/>
+<ellipse cx="414" cy="351" rx="42" ry="67" fill="#35c883"/><ellipse cx="554" cy="351" rx="42" ry="67" fill="#35c883"/>
+<ellipse cx="421" cy="357" rx="21" ry="46" fill="#183b59"/><ellipse cx="548" cy="357" rx="21" ry="46" fill="#183b59"/>
+<circle cx="430" cy="321" r="17" fill="#fff"/><circle cx="560" cy="322" r="17" fill="#fff"/>
+<ellipse cx="483" cy="467" rx="127" ry="88" fill="#f2f3fc"/>
+<path d="M456 428 Q482 410 509 430 Q494 455 483 457 Q467 451 456 428Z" fill="#e68caa"/>
+<path d="M482 458 Q468 492 442 476 M482 458 Q502 492 530 476" stroke="#634a69" stroke-width="8" fill="none" stroke-linecap="round"/>
+<g stroke="#f4f4ff" stroke-width="6" stroke-linecap="round"><path d="M365 450 L263 425 M360 469 L251 473 M606 450 L711 425 M611 469 L722 474"/></g>
+<!-- graduation cap -->
+<path d="M284 208 L493 115 700 208 493 291Z" fill="#263f9e" stroke="#91d8ff" stroke-width="9"/>
+<path d="M369 244 Q491 295 618 244 L613 294 Q493 350 373 291Z" fill="#2c64cb" stroke="#b9eaff" stroke-width="7"/>
+<path d="M696 213 L715 321" stroke="#ffd958" stroke-width="10"/><circle cx="715" cy="332" r="19" fill="#ffcf4b"/>
+<!-- book -->
+<path d="M235 637 Q326 603 415 647 V807 Q317 767 235 807Z" fill="#ffbd43" stroke="#fff" stroke-width="11"/>
+<path d="M415 647 Q503 605 585 647 V807 Q500 766 415 807Z" fill="#ff7d5d" stroke="#fff" stroke-width="11"/>
+<text x="413" y="730" font-family="Arial" font-size="58" font-weight="900" text-anchor="middle" fill="#fff" stroke="#bb6c40" stroke-width="2">ABC</text>
+</g>
+<!-- sparkle decorations -->
+<g fill="#fff7a3"><path d="M178 311 l15 37 37 15 -37 15 -15 37 -15 -37 -37 -15 37 -15Z"/><path d="M781 310 l11 29 29 11 -29 11 -11 29 -11 -29 -29 -11 29 -11Z"/><circle cx="809" cy="490" r="10"/><circle cx="127" cy="485" r="10"/></g>
+<!-- buttons -->
+<g font-family="DejaVu Sans,Arial,sans-serif" font-size="39" font-weight="900" text-anchor="middle" filter="url(#shadow)">
+<rect x="1214" y="118" width="420" height="99" rx="48" fill="url(#pink)" stroke="white" stroke-width="9"/><text x="1424" y="182" fill="white">📚 HỌC TẬP</text>
+<rect x="1214" y="236" width="420" height="93" rx="46" fill="url(#blue)" stroke="white" stroke-width="9"/><text x="1424" y="297" fill="white">⭐ NHIỆM VỤ</text>
+<rect x="1214" y="340" width="420" height="94" rx="46" fill="url(#green)" stroke="white" stroke-width="9"/><text x="1424" y="400" fill="white">🐱 CHĂM MÈO</text>
+<rect x="1214" y="446" width="420" height="94" rx="46" fill="url(#gold)" stroke="white" stroke-width="9"/><text x="1424" y="508" fill="#a34a16">🎮 TRÒ CHƠI</text>
+<rect x="1214" y="551" width="420" height="94" rx="46" fill="url(#purple)" stroke="white" stroke-width="9"/><text x="1424" y="612" fill="white">🛍 CỬA HÀNG</text>
+<rect x="1214" y="657" width="420" height="94" rx="46" fill="url(#blue)" stroke="white" stroke-width="9"/><text x="1424" y="718" fill="white">🏆 THÀNH TÍCH</text>
+<rect x="1214" y="763" width="420" height="94" rx="46" fill="url(#pink)" stroke="white" stroke-width="9"/><text x="1424" y="824" fill="white">⚙ CÀI ĐẶT</text>
+<rect x="718" y="730" width="456" height="155" rx="78" fill="url(#gold)" stroke="white" stroke-width="13"/><text x="946" y="825" font-size="62" fill="#fff" stroke="#d56e19" stroke-width="3" paint-order="stroke">CHƠI NGAY ▶</text>
+</g></svg>
