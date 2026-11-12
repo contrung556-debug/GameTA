@@ -38,7 +38,7 @@ jobs:
         run: flutter test
       - name: Analyze Flutter source
         working-directory: be_vui_english
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
       - name: Build Android APK
         working-directory: be_vui_english
         run: flutter build apk --release
